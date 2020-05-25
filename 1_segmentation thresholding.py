@@ -1,34 +1,47 @@
+
+
 #specify folder to draw from and 
+#\\Substack (135-715)0000.tif
 import os
+folder = "F:\\0CT Scans\\1_Jan 2019\\18012018_09 K151\\k151 oct17 16bbackofhead\\earcrp"
+#\Substack (256-653)0000.tif
+ID = "K151 2018"
+spacing = 0.032#yes
 firstfile = folder+'\\'+os.listdir(folder)[0]
-firstfile = folder+'\\'+os.listdir(folder)[0]
+
+#scene arleady saved
+ID = "Flamingo01 2019"
+spacing = 0.032#yes
+
+#load volume
+slicer.util.loadVolume(firstfile, returnNode=True)
+
 #SET ROOT DIRECTORY to be in the same folder as the cropped files
 slicer.mrmlScene.SetRootDirectory(folder)
 
+#remove 3D slicer logo to increase room
 slicer.util.findChild(slicer.util.mainWindow(), 'LogoLabel').visible = False
 
 #You can print all Segment Editor effect parameter names by typing this into the Python console:
 #print(slicer.mrmlScene.GetFirstNodeByClass("vtkMRMLSegmentEditorNode"))
 # Load dry bone CT of skull into the scene and run this script to automatically segment endocranium
-slicer.util.loadVolume("C:\\Users\\jeffzeyl\\Desktop\\RD01r2_2019\\pigeon0000.tif", returnNode=True)
+#slicer.util.loadVolume("C:\\Users\\jeffzeyl\\Desktop\\RD01r2_2019\\pigeon0000.tif", returnNode=True)
 
-ID = "RD01 2019"##############INPUT SPECIMEN ID HERE
-spacing = 0.018
+
 masterVolumeNode = slicer.mrmlScene.GetFirstNodeByClass("vtkMRMLScalarVolumeNode")
 #slicer.util.getNode('pigeon0000')
 
 #set resolution
 #name the volume node and input resolution
-import os
-volnameinapp = 'pigeon0000'
-vol_node = slicer.util.getNode(volnameinapp)#the character inside is the one listed in 'data' module
+#vol_node = slicer.util.getNode(os.listdir(folder)[0].replace('.tif',''))#the character inside is the one listed in 'data' module
 import itertools
 imagespacing = list(itertools.repeat(spacing, 3))
-vol_node.SetSpacing(imagespacing)#assign resolution to the volume
+masterVolumeNode.SetSpacing(imagespacing)#assign resolution to the volume
 volumeScalarRange = masterVolumeNode.GetImageData().GetScalarRange()
 
+segmentationNode = slicer.util.getNode('Segmentation')
 
-# Create SEGMENTATION NODE AND LINK TO VOLUME
+# Create SEGMENTATION NODE AND LINK TO VOLUME (if there isn't one already existing! otherwise, node can be named using the preceding command)
 slicer.app.processEvents()
 segmentationNode = slicer.vtkMRMLSegmentationNode()#name segmentation node
 slicer.mrmlScene.AddNode(segmentationNode)#add the node to the scene
@@ -38,7 +51,6 @@ segmentationNode.SetReferenceImageGeometryParameterFromVolumeNode(masterVolumeNo
 #CREATE EMPTY SEGMENTS
 #boneSegmentID = segmentationNode.GetSegmentation().AddEmptySegment("bone")
 paintcol = segmentationNode.GetSegmentation().AddEmptySegment(ID+" paint col")
-threshcol = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh col")
 paintumbo = segmentationNode.GetSegmentation().AddEmptySegment(ID+" paint umbo")
 threshumbo = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh umbo")
 paintecd = segmentationNode.GetSegmentation().AddEmptySegment(ID+" paint ECD")
@@ -60,11 +72,11 @@ segmentEditorWidget.setMasterVolumeNode(masterVolumeNode)#connect master node
 #paintcolseg = segmentationNode.GetSegmentation().AddEmptySegment("paintcol")
 #paintcol = segmentationNode.GetSegmentation().AddEmptySegment(ID+" paint col")
 #slicer.app.processEvents()
-segmentEditorNode.SetSelectedSegmentID(paintcol)
-segmentEditorWidget.setActiveEffectByName("Paint")
-paintEffect = segmentEditorWidget.activeEffect()
-paintEffect.setParameter("BrushRelativeDiameter",10)
-paintEffect.setParameter("BrushSphere",1)
+#segmentEditorNode.SetSelectedSegmentID(paintcol)
+#segmentEditorWidget.setActiveEffectByName("Paint")
+#paintEffect = segmentEditorWidget.activeEffect()
+#paintEffect.setParameter("BrushRelativeDiameter",10)
+#paintEffect.setParameter("BrushSphere",1)
 
 # Compute bone threshold value automatically
 import vtkITK
@@ -80,12 +92,19 @@ ISO_thresholdCalculator.SetMethodToIsoData()
 ISO_thresholdCalculator.Update()
 ISOval = ISO_thresholdCalculator.GetThreshold()
 
+Moments_thresholdCalculator = vtkITK.vtkITKImageThresholdCalculator()
+Moments_thresholdCalculator.SetInputData(masterVolumeNode.GetImageData())
+Moments_thresholdCalculator.SetMethodToMoments()
+Moments_thresholdCalculator.Update()
+Momentsval = Moments_thresholdCalculator.GetThreshold()
+
 #MAX ENTROPY THRESHOLD OF COLUMELLA
 #OverwriteMode: OverwriteNone
 #SelectedSegmentID: threshcol
 #ActiveEffectName: "Threshold"
 #MaskMode: PaintAllowedInsideSingleSegment #segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInsideVisibleSegments)
 #MaskSegmentID: paintcol
+threshcol = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh col")
 segmentEditorNode.SetOverwriteMode(slicer.vtkMRMLSegmentEditorNode.OverwriteNone)
 segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInsideSingleSegment)
 segmentEditorNode.SetSelectedSegmentID(ID+" thresh col")
@@ -94,11 +113,6 @@ segmentEditorWidget.setActiveEffectByName("Threshold")
 effect = segmentEditorWidget.activeEffect()
 effect.setParameter("MinimumThreshold", str(Maxentval))
 effect.setParameter("MaximumThreshold",str(volumeScalarRange[1]))
-#effect.setParameter("Threshold.AutoThresholdMethod","MAXIMUM_ENTROPY")#maximum entropy algorithm
-#effect.setParameter("Threshold.AutoThresholdMode","SET_LOWER_MAX")
-#effect.setParameter("MinimumThreshold",0)
-#effect.setParameter("MaximumThreshold",695)
-#effect.setParameter("MaskSegmentID",ID+" paint col")
 effect.self().onApply()#apply separate
 
 #run keep largest island on thresholded columella
@@ -114,7 +128,7 @@ resultsTableNode = slicer.mrmlScene.AddNewNodeByClass('vtkMRMLTableNode')# creat
 import SegmentStatistics
 segStatLogic = SegmentStatistics.SegmentStatisticsLogic()
 segStatLogic.getParameterNode().SetParameter("Segmentation", segmentationNode.GetID())
-segStatLogic.getParameterNode().SetParameter("ScalarVolume", 'pigeon0000')############change here to the named volume
+segStatLogic.getParameterNode().SetParameter("ScalarVolume", os.listdir(folder)[0].replace('.tif',''))############change here to the named volume
 segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.enabled","False")
 segStatLogic.getParameterNode().SetParameter("ScalarVolumeSegmentStatisticsPlugin.voxel_count.enabled","False")
 segStatLogic.computeStatistics()
@@ -122,16 +136,16 @@ segStatLogic.exportToTable(resultsTableNode)
 segStatLogic.showTable(resultsTableNode)
 
 #OR STORE STATS AS DICTIONARY:
-#import SegmentStatistics
-#segStatLogic = SegmentStatistics.SegmentStatisticsLogic()
-#segStatLogic.getParameterNode().SetParameter("Segmentation", segmentationNode.GetID())
-#segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_origin_ras.enabled",str(True))
-#segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_diameter_mm.enabled",str(True))
-#segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_x.enabled",str(True))
-#segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_y.enabled",str(True))
-#segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_z.enabled",str(True))
-#segStatLogic.computeStatistics()
-#stats = segStatLogic.getStatistics()
+import SegmentStatistics
+segStatLogic = SegmentStatistics.SegmentStatisticsLogic()
+segStatLogic.getParameterNode().SetParameter("Segmentation", segmentationNode.GetID())
+segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_origin_ras.enabled",str(True))
+segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_diameter_mm.enabled",str(True))
+segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_x.enabled",str(True))
+segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_y.enabled",str(True))
+segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_z.enabled",str(True))
+segStatLogic.computeStatistics()
+stats = segStatLogic.getStatistics()
 
 
 #MAX ENTROPY THRESHOLD OF ECD
@@ -156,22 +170,40 @@ effect.setParameterDefault("Operation", "KEEP_LARGEST_ISLAND")
 
 effect.self().onApply()#apply separate
 
-#ISODATA-MAXENT THRESHOLD FOR UMBO
+#moments/ISODATA-MAXENT THRESHOLD FOR UMBO
 segmentEditorNode.SetOverwriteMode(slicer.vtkMRMLSegmentEditorNode.OverwriteNone)
+effect = segmentEditorWidget.activeEffect()
 segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInsideSingleSegment)
 segmentEditorNode.SetSelectedSegmentID(ID+" thresh umbo")
 segmentEditorNode.SetMaskSegmentID(ID+" paint umbo")
 segmentEditorWidget.setActiveEffectByName("Threshold")
-effect = segmentEditorWidget.activeEffect()
-effect.setParameter("MinimumThreshold", str(ISOval))
+effect.setParameter("MinimumThreshold", str(ISOval))#//str(Momentsval)
 effect.setParameter("MaximumThreshold",str(Maxentval))
 
 effect.self().onApply()#apply separate
 
+#remove visibility of painted segments
+segmentationNodedisplaynode = segmentationNode.GetDisplayNode()#make display node
+
+segmentationNodedisplaynode.SetSegmentVisibility2DFill(ID+" paint col", 0)
+segmentationNodedisplaynode.SetSegmentVisibility2DOutline(ID+" paint col", 0)
+segmentationNodedisplaynode.SetSegmentVisibility3D(ID+" paint col", 0)
+
+segmentationNodedisplaynode.SetSegmentVisibility2DFill(ID+" paint umbo", 0)
+segmentationNodedisplaynode.SetSegmentVisibility2DOutline(ID+" paint umbo", 0)
+segmentationNodedisplaynode.SetSegmentVisibility3D(ID+" paint umbo", 0)
+
+segmentationNodedisplaynode.SetSegmentVisibility2DFill(ID+" paint ECD", 0)
+segmentationNodedisplaynode.SetSegmentVisibility2DOutline(ID+" paint ECD", 0)
+segmentationNodedisplaynode.SetSegmentVisibility3D(ID+" paint ECD", 0)
+
+segmentationNodedisplaynode.SetSegmentVisibility2DFill(ID+" thresh ECD", 1)
+
 #TO DO - default settings paint for umbo. - 3d sphere
 #TO DO - threshold Umbo - lower iso
 
-
+#show segmentation in 3D
+segmentationNode.CreateClosedSurfaceRepresentation()
 
 #OTHER FIDUCIAL CODE< MAY BE USEFUL:
 # Get point positions as numpy array
@@ -213,20 +245,6 @@ effect.self().onApply()#apply separate
 ##fidNode.SetNthFiducialSelected(n, 1)
 ### set the visibility flag
 ##fidNode.SetNthFiducialVisibility(n, 0)  
-
-
-
-# Make segmentation results nicely visible in 3D
-segmentationDisplayNode = segmentationNode.GetDisplayNode()
-segmentationDisplayNode.SetSegmentOpacity3D(threshcol, 0.4)
-
-# Find largest object, remove all other regions from the segment
-slicer.app.processEvents()
-segmentEditorWidget.setActiveEffectByName("Islands")
-effect = segmentEditorWidget.activeEffect()
-effect.setParameterDefault("Operation", "KEEP_LARGEST_ISLAND")
-effect.self().onApply()
-
 
 # Make segmentation results visible in 3D
 #segmentationNode.CreateClosedSurfaceRepresentation()
