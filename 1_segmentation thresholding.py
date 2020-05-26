@@ -139,13 +139,17 @@ segStatLogic.showTable(resultsTableNode)
 import SegmentStatistics
 segStatLogic = SegmentStatistics.SegmentStatisticsLogic()
 segStatLogic.getParameterNode().SetParameter("Segmentation", segmentationNode.GetID())
-segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_origin_ras.enabled",str(True))
-segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_diameter_mm.enabled",str(True))
-segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_x.enabled",str(True))
-segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_y.enabled",str(True))
-segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_z.enabled",str(True))
+#segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_origin_ras.enabled",str(True))
+#segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_diameter_mm.enabled",str(True))
+#segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_x.enabled",str(True))
+#segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_y.enabled",str(True))
+#segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_z.enabled",str(True))
 segStatLogic.computeStatistics()
 stats = segStatLogic.getStatistics()
+x = thisdict["model"]
+stats['BS01-2019 thresh col']
+stats[ID+" thresh col", 'ClosedSurfaceSegmentStatisticsPlugin.volume_mm3']
+
 
 
 #MAX ENTROPY THRESHOLD OF ECD
@@ -162,7 +166,7 @@ effect.setParameter("MaximumThreshold",str(Maxentval))
 
 effect.self().onApply()#apply separate
 
-#run KEEP LARGEST ISLAND on thresholded columella
+#run KEEP LARGEST ISLAND on ECD tip
 segmentEditorWidget.setActiveEffectByName("Islands")
 effect = segmentEditorWidget.activeEffect()
 segmentEditorNode.SetSelectedSegmentID(ID+" thresh ECD")
@@ -177,7 +181,7 @@ segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInside
 segmentEditorNode.SetSelectedSegmentID(ID+" thresh umbo")
 segmentEditorNode.SetMaskSegmentID(ID+" paint umbo")
 segmentEditorWidget.setActiveEffectByName("Threshold")
-effect.setParameter("MinimumThreshold", str(ISOval))#//str(Momentsval)
+effect.setParameter("MinimumThreshold", str(Momentsval))#//str(Momentsval),str(ISOval)
 effect.setParameter("MaximumThreshold",str(Maxentval))
 
 effect.self().onApply()#apply separate
