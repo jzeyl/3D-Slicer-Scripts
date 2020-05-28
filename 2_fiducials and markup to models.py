@@ -17,42 +17,48 @@ FIDNode5.SetName(ID+"ECandTMmrk_outline")#creates a new segmentation
 
 
 ####SELECT POINTS in GUI###
+#CLICK TM FIRST!
+
 
 #set ficudial display nodes
 FIDNode1DisplayNode = FIDNode1.GetDisplayNode()
-FIDNode1DisplayNode.SetGlyphScale(0.3)
-FIDNode1DisplayNode.SetTextScale(0.3)
+FIDNode1DisplayNode.SetGlyphScale(0.15)
+FIDNode1DisplayNode.SetTextScale(0.1)
 FIDNode1DisplayNode.SetSelectedColor(1,0,0)#red
 
 FIDNode2DisplayNode = FIDNode2.GetDisplayNode()
-FIDNode2DisplayNode.SetGlyphScale(0.3)
-FIDNode2DisplayNode.SetTextScale(0.3)
-FIDNode1DisplayNode.SetSelectedColor(0,1,0)#green
+FIDNode2DisplayNode.SetGlyphScale(0.15)
+FIDNode2DisplayNode.SetTextScale(0.1)
+FIDNode2DisplayNode.SetSelectedColor(0,1,0)#green
 
 FIDNode3DisplayNode = FIDNode3.GetDisplayNode()
-FIDNode3DisplayNode.SetGlyphScale(0.3)
-FIDNode3DisplayNode.SetTextScale(0.3)
+FIDNode3DisplayNode.SetGlyphScale(0.15)
+FIDNode3DisplayNode.SetTextScale(0.1)
+FIDNode3DisplayNode.SetSelectedColor(1,1,0)#green
 
 FIDNode4DisplayNode = FIDNode4.GetDisplayNode()
-FIDNode4DisplayNode.SetGlyphScale(0.3)
-FIDNode4DisplayNode.SetTextScale(0.3)
+FIDNode4DisplayNode.SetGlyphScale(0.15)
+FIDNode4DisplayNode.SetTextScale(0.1)
 
 FIDNode5DisplayNode = FIDNode5.GetDisplayNode()
-FIDNode5DisplayNode.SetGlyphScale(0.3)
-FIDNode5DisplayNode.SetTextScale(0.3)
-FIDNode1DisplayNode.SetSelectedColor(0,0,0)#black
+FIDNode5DisplayNode.SetGlyphScale(0.15)
+FIDNode5DisplayNode.SetTextScale(0.1)
+FIDNode5DisplayNode.SetSelectedColor(0,0,0)#black
 
 #lock the models to they don't get modified (1 = locked, 0 = unlocked)
 FIDNode1.SetLocked(1)
 FIDNode2.SetLocked(1)
 FIDNode3.SetLocked(1)
 FIDNode4.SetLocked(1)
-#FIDnode5.SetLocked(1) #keep this one open
+#FIDNode5.SetLocked(1) #keep this one open
+
+#get nodes of TM and EC if already
+#FIDNode1 = slicer.util.getFirstNodeByName('WCP-03-2019 TM')
+#FIDNode4 = slicer.util.getFirstNodeByName('WCP-03-2019 EC')
 
 
 #USE MARKUP FIDUCIALS SELECTED TO OUTLINE TM AND EXTRACOLUMELLA REGION FROM , FOR SUBSEQUENT AUTO SEGMENTATION
 import numpy as np
-
 #Extracolumella
 numberfiducialpoints = FIDNode4.GetNumberOfFiducials()#g
 points = np.zeros([numberfiducialpoints,3])#4 rows, 3 columns (i.e., 4 points, each with x,y,z)
@@ -76,10 +82,15 @@ for i in range(0, numberfiducialpoints):#put the TM points into the 'points' arr
 for i in range(0,numberfiducialpoints):
   FIDNode5.AddFiducial(points[i,][0],points[i,][1],points[i,][2])
 
+
+#
+################SAVE##################
+ ################SAVE##################
+ ################SAVE##################
 #now run the markups model in GUI to create a model. 
 # 
 # Then need to import as a segmentation
-modeloutlinenode =slicer.util.getNode('EC_TM_mod')#create model node from the just created model
+modeloutlinenode = slicer.util.getNode('EC_TM_mod')#create model node from the just created model
 slicer.modules.segmentations.logic().ImportModelToSegmentationNode(modeloutlinenode,segmentationNode,"tosegment")
 
 #remove visibility of 'EC_TM_mod' model and 
@@ -92,7 +103,8 @@ thresh_EC_TMseg = segmentationNode.GetSegmentation().AddEmptySegment(ID+" ECplus
 #momentsISODATA-MAXENT THRESHOLD FOR UMBO
 segmentEditorNode.SetOverwriteMode(slicer.vtkMRMLSegmentEditorNode.OverwriteNone)
 segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInsideSingleSegment)
-segmentEditorNode.SetSelectedSegmentID(ID+" ECplusTM")
+segmentEditorNode.SetSelectedSegmentID(ID+" ECplusTM")#
+#segmentEditorNode.SetSelectedSegmentID(EC_TM_modthresh)#
 segmentEditorNode.SetMaskSegmentID('EC_TM_mod')
 segmentEditorWidget.setActiveEffectByName("Threshold")
 effect = segmentEditorWidget.activeEffect()
@@ -101,6 +113,72 @@ effect.setParameter("MaximumThreshold",str(Maxentval))
 
 effect.self().onApply()#apply separate
 
+#############RW################3# Then need to import as a segmentation
+RWmodeloutlinenode = slicer.util.getNode('RW_mod')#create model node from the just created model
+slicer.modules.segmentations.logic().ImportModelToSegmentationNode(RWmodeloutlinenode,segmentationNode,"tosegment")
+
+#remove visibility of 'EC_TM_mod' model and 
+RWmodeloutlinenode.SetDisplayVisibility(0)
+
+#MAX ENTROPY THRESHOLD OF ECD
+RW_modthreshseg = segmentationNode.GetSegmentation().AddEmptySegment(ID+" RW_modthresh")#create new segmentation ID
+#
+segmentEditorNode.SetOverwriteMode(slicer.vtkMRMLSegmentEditorNode.OverwriteNone)
+segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInsideSingleSegment)
+segmentEditorNode.SetSelectedSegmentID(ID+" RW_modthresh")
+segmentEditorNode.SetMaskSegmentID('RW_mod')
+segmentEditorWidget.setActiveEffectByName("Threshold")
+effect = segmentEditorWidget.activeEffect()
+#effect.setParameter("AutoThresholdMode",'SET_MIN_UPPER')
+#effect.setParameter("AutoThresholdMethod","MAXIMUM_ENTROPY")#maximum entropy algorithm
+effect.setParameter("MinimumThreshold", str(Maxentval))
+effect.setParameter("MaximumThreshold",str(volumeScalarRange[1]))
+
+effect.self().onApply()#apply separate
+
+
+#############  CA   ################3# Then need to import as a segmentation
+CAmodeloutlinenode = slicer.util.getNode('CA_mod')#create model node from the just created model
+slicer.modules.segmentations.logic().ImportModelToSegmentationNode(CAmodeloutlinenode,segmentationNode,"tosegment")
+
+#remove visibility of 'EC_TM_mod' model and 
+CAmodeloutlinenode.SetDisplayVisibility(0)
+
+#MAX ENTROPY THRESHOLD OF ECD
+CA_modthreshseg = segmentationNode.GetSegmentation().AddEmptySegment(ID+" CA_modthresh")#create new segmentation ID
+#
+segmentEditorNode.SetOverwriteMode(slicer.vtkMRMLSegmentEditorNode.OverwriteNone)
+segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInsideSingleSegment)
+segmentEditorNode.SetSelectedSegmentID(ID+" CA_modthresh")
+segmentEditorNode.SetMaskSegmentID('CA_mod')
+segmentEditorWidget.setActiveEffectByName("Threshold")
+effect = segmentEditorWidget.activeEffect()
+#effect.setParameter("AutoThresholdMode",'SET_MIN_UPPER')
+#effect.setParameter("AutoThresholdMethod","MAXIMUM_ENTROPY")#maximum entropy algorithm
+effect.setParameter("MinimumThreshold", str(Maxentval))
+effect.setParameter("MaximumThreshold",str(volumeScalarRange[1]))
+
+effect.self().onApply()#apply separate
+
+#GUI - SAVE VISUAL SEGMENTS AS STL
+
+
+import sys
+for path in sys.path:
+  print(path)
+
+# Write to STL file
+colout = segmentationNode.GetClosedSurfaceRepresentation(thresh_EC_TMseg)
+writer = vtk.vtkSTLWriter()
+writer.SetInputData(colout)
+writer.SetFileName("c:/tmp/something.stl")
+writer.Update()
+
+writer = vtk.vtkSTLWriter()
+writer.SetInputData(surfaceMesh)
+writer.SetFileName("C:/Users/jeffzeyl/Desktop/Volumetest.stl")
+writer.Update()
+"C:\Users\jeffzeyl\Desktop\Volumetest.stl"
 
 # Make segmentation results nicely visible in 3D
 segmentationDisplayNode = segmentationNode.GetDisplayNode()

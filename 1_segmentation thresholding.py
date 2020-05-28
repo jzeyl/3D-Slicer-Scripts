@@ -1,26 +1,19 @@
 
-
-#specify folder to draw from and 
-#\\Substack (135-715)0000.tif
-import os
-folder = "F:\\0CT Scans\\1_Jan 2019\\18012018_09 K151\\k151 oct17 16bbackofhead\\earcrp"
-#\Substack (256-653)0000.tif
-ID = "K151 2018"
-spacing = 0.032#yes
-firstfile = folder+'\\'+os.listdir(folder)[0]
-
+##########################INPUT DATA FOR NEW SESSION
 #scene arleady saved
 ID = "Flamingo01 2019"
 spacing = 0.032#yes
-
+folder = "F:\\0CT Scans\\1_Jan 2019\\18012018_09 K151\\k151 oct17 16bbackofhead\\earcrp"
+#\Substack (256-653)0000.tif
+#ID = "K151 2018"
+#spacing = 0.032#yes
+import os
+firstfile = folder+'\\'+os.listdir(folder)[0]
 #load volume
 slicer.util.loadVolume(firstfile, returnNode=True)
-
 #SET ROOT DIRECTORY to be in the same folder as the cropped files
 slicer.mrmlScene.SetRootDirectory(folder)
-
-#remove 3D slicer logo to increase room
-slicer.util.findChild(slicer.util.mainWindow(), 'LogoLabel').visible = False
+######################################
 
 #You can print all Segment Editor effect parameter names by typing this into the Python console:
 #print(slicer.mrmlScene.GetFirstNodeByClass("vtkMRMLSegmentEditorNode"))
@@ -29,20 +22,19 @@ slicer.util.findChild(slicer.util.mainWindow(), 'LogoLabel').visible = False
 
 
 masterVolumeNode = slicer.mrmlScene.GetFirstNodeByClass("vtkMRMLScalarVolumeNode")
-#slicer.util.getNode('pigeon0000')
-
+#or can get the volume node by the name slicer.util.getNode('pigeon0000')
+#print(mastervolumeNode)
 #set resolution
-#name the volume node and input resolution
-#vol_node = slicer.util.getNode(os.listdir(folder)[0].replace('.tif',''))#the character inside is the one listed in 'data' module
 import itertools
 imagespacing = list(itertools.repeat(spacing, 3))
 masterVolumeNode.SetSpacing(imagespacing)#assign resolution to the volume
 volumeScalarRange = masterVolumeNode.GetImageData().GetScalarRange()
 
-segmentationNode = slicer.util.getNode('Segmentation')
+#IF ALREADY SAVED SCENE:
+#segmentationNode = slicer.util.getNode('Segmentation')
+#segmentationNode = slicer.mrmlScene.GetFirstNodeByClass("vtkMRMLSegmentationNode")
 
 # Create SEGMENTATION NODE AND LINK TO VOLUME (if there isn't one already existing! otherwise, node can be named using the preceding command)
-slicer.app.processEvents()
 segmentationNode = slicer.vtkMRMLSegmentationNode()#name segmentation node
 slicer.mrmlScene.AddNode(segmentationNode)#add the node to the scene
 segmentationNode.CreateDefaultDisplayNodes() # only needed for display
@@ -56,10 +48,7 @@ threshumbo = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh umbo
 paintecd = segmentationNode.GetSegmentation().AddEmptySegment(ID+" paint ECD")
 threshecd = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh ECD")
 
-
-# Create SEGMENT EDITOR WIDGET to get access to effects
-# To show segment editor widget (useful for debugging): segmentEditorWidget.show()
-#slicer.app.processEvents()
+# Create segment editor to get access to effects
 segmentEditorWidget = slicer.qMRMLSegmentEditorWidget()
 segmentEditorWidget.setMRMLScene(slicer.mrmlScene)#connect widget to scene
 segmentEditorNode = slicer.vtkMRMLSegmentEditorNode()
@@ -68,15 +57,8 @@ segmentEditorWidget.setMRMLSegmentEditorNode(segmentEditorNode)#connect segment 
 segmentEditorWidget.setSegmentationNode(segmentationNode)#connect segmentation node
 segmentEditorWidget.setMasterVolumeNode(masterVolumeNode)#connect master node
 
-#PAINT COLUMELLA SETTING
-#paintcolseg = segmentationNode.GetSegmentation().AddEmptySegment("paintcol")
-#paintcol = segmentationNode.GetSegmentation().AddEmptySegment(ID+" paint col")
-#slicer.app.processEvents()
-#segmentEditorNode.SetSelectedSegmentID(paintcol)
-#segmentEditorWidget.setActiveEffectByName("Paint")
-#paintEffect = segmentEditorWidget.activeEffect()
-#paintEffect.setParameter("BrushRelativeDiameter",10)
-#paintEffect.setParameter("BrushSphere",1)
+
+#slicer.util.getNodesByClass('vtkMRMLSegmentEditorNode')
 
 # Compute bone threshold value automatically
 import vtkITK
@@ -105,11 +87,11 @@ Momentsval = Moments_thresholdCalculator.GetThreshold()
 #MaskMode: PaintAllowedInsideSingleSegment #segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInsideVisibleSegments)
 #MaskSegmentID: paintcol
 threshcol = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh col")
+segmentEditorWidget.setActiveEffectByName("Threshold")
 segmentEditorNode.SetOverwriteMode(slicer.vtkMRMLSegmentEditorNode.OverwriteNone)
 segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInsideSingleSegment)
 segmentEditorNode.SetSelectedSegmentID(ID+" thresh col")
 segmentEditorNode.SetMaskSegmentID(ID+" paint col")
-segmentEditorWidget.setActiveEffectByName("Threshold")
 effect = segmentEditorWidget.activeEffect()
 effect.setParameter("MinimumThreshold", str(Maxentval))
 effect.setParameter("MaximumThreshold",str(volumeScalarRange[1]))
@@ -124,16 +106,16 @@ effect.setParameterDefault("Operation", "KEEP_LARGEST_ISLAND")
 effect.self().onApply()#apply separate
 
 #quantification table
-resultsTableNode = slicer.mrmlScene.AddNewNodeByClass('vtkMRMLTableNode')# create table node
-import SegmentStatistics
-segStatLogic = SegmentStatistics.SegmentStatisticsLogic()
-segStatLogic.getParameterNode().SetParameter("Segmentation", segmentationNode.GetID())
-segStatLogic.getParameterNode().SetParameter("ScalarVolume", os.listdir(folder)[0].replace('.tif',''))############change here to the named volume
-segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.enabled","False")
-segStatLogic.getParameterNode().SetParameter("ScalarVolumeSegmentStatisticsPlugin.voxel_count.enabled","False")
-segStatLogic.computeStatistics()
-segStatLogic.exportToTable(resultsTableNode)
-segStatLogic.showTable(resultsTableNode)
+#resultsTableNode = slicer.mrmlScene.AddNewNodeByClass('vtkMRMLTableNode')# create table node
+#import SegmentStatistics
+#segStatLogic = SegmentStatistics.SegmentStatisticsLogic()
+#segStatLogic.getParameterNode().SetParameter("Segmentation", segmentationNode.GetID())
+#segStatLogic.getParameterNode().SetParameter("ScalarVolume", os.listdir(folder)[0].replace('.tif',''))############change here to the named volume
+#segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.enabled","False")
+#segStatLogic.getParameterNode().SetParameter("ScalarVolumeSegmentStatisticsPlugin.voxel_count.enabled","False")
+#segStatLogic.computeStatistics()
+#segStatLogic.exportToTable(resultsTableNode)
+#segStatLogic.showTable(resultsTableNode)
 
 #OR STORE STATS AS DICTIONARY:
 import SegmentStatistics
@@ -146,10 +128,24 @@ segStatLogic.getParameterNode().SetParameter("Segmentation", segmentationNode.Ge
 #segStatLogic.getParameterNode().SetParameter("LabelmapSegmentStatisticsPlugin.obb_direction_ras_z.enabled",str(True))
 segStatLogic.computeStatistics()
 stats = segStatLogic.getStatistics()
-x = thisdict["model"]
-stats['BS01-2019 thresh col']
-stats[ID+" thresh col", 'ClosedSurfaceSegmentStatisticsPlugin.volume_mm3']
+#x = thisdict["model"]
+#stats['BS01-2019 thresh col']
+#colvol = stats[ID+" thresh col", 'ClosedSurfaceSegmentStatisticsPlugin.volume_mm3']
+colvol = stats[ID+" thresh col",'LabelmapSegmentStatisticsPlugin.volume_mm3']
+'KW01 thresh col', 'LabelmapSegmentStatisticsPlugin.volume_mm3'
+'KW01 thresh col', 'LabelmapSegmentStatisticsPlugin.volume_mm3'
 
+#Write to text file
+# with is like your try .. finally block in this case
+with open('C:\\Users\\jeffzeyl\\Desktop\\Volumes.txt', 'r') as file:
+    # read a list of lines into data
+    data = file.readlines()
+
+data.append(ID+', '+str(colvol)+'\n')
+
+# and write everything back
+with open('C:\\Users\\jeffzeyl\\Desktop\\Volumes.txt', 'w') as file:
+    file.writelines( data )
 
 
 #MAX ENTROPY THRESHOLD OF ECD
@@ -181,7 +177,7 @@ segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInside
 segmentEditorNode.SetSelectedSegmentID(ID+" thresh umbo")
 segmentEditorNode.SetMaskSegmentID(ID+" paint umbo")
 segmentEditorWidget.setActiveEffectByName("Threshold")
-effect.setParameter("MinimumThreshold", str(Momentsval))#//str(Momentsval),str(ISOval)
+effect.setParameter("MinimumThreshold", str(ISOval))#//str(Momentsval),str(ISOval)
 effect.setParameter("MaximumThreshold",str(Maxentval))
 
 effect.self().onApply()#apply separate
