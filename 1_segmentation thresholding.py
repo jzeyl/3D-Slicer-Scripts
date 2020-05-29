@@ -1,9 +1,9 @@
 
 ##########################INPUT DATA FOR NEW SESSION
 #scene arleady saved
-ID = "Flamingo01 2019"
-spacing = 0.032#yes
-folder = "F:\\0CT Scans\\1_Jan 2019\\18012018_09 K151\\k151 oct17 16bbackofhead\\earcrp"
+#ID = "Flamingo01 2019"
+#spacing = 0.032#yes
+#folder = "F:\\0CT Scans\\1_Jan 2019\\18012018_09 K151\\k151 oct17 16bbackofhead\\earcrp"
 #\Substack (256-653)0000.tif
 #ID = "K151 2018"
 #spacing = 0.032#yes
@@ -48,17 +48,20 @@ threshumbo = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh umbo
 paintecd = segmentationNode.GetSegmentation().AddEmptySegment(ID+" paint ECD")
 threshecd = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh ECD")
 
+#add segment editor node
+segmentEditorNode = slicer.vtkMRMLSegmentEditorNode()
+slicer.mrmlScene.AddNode(segmentEditorNode)#add segment editor node to scene
+
+
+#if previously saved
+#segmentEditorNode = = slicer.util.getNode('SegmentEditor')
+
 # Create segment editor to get access to effects
 segmentEditorWidget = slicer.qMRMLSegmentEditorWidget()
 segmentEditorWidget.setMRMLScene(slicer.mrmlScene)#connect widget to scene
-segmentEditorNode = slicer.vtkMRMLSegmentEditorNode()
-slicer.mrmlScene.AddNode(segmentEditorNode)#add segment editor node to scene
 segmentEditorWidget.setMRMLSegmentEditorNode(segmentEditorNode)#connect segment editor to editor widget
 segmentEditorWidget.setSegmentationNode(segmentationNode)#connect segmentation node
 segmentEditorWidget.setMasterVolumeNode(masterVolumeNode)#connect master node
-
-
-#slicer.util.getNodesByClass('vtkMRMLSegmentEditorNode')
 
 # Compute bone threshold value automatically
 import vtkITK
@@ -79,6 +82,12 @@ Moments_thresholdCalculator.SetInputData(masterVolumeNode.GetImageData())
 Moments_thresholdCalculator.SetMethodToMoments()
 Moments_thresholdCalculator.Update()
 Momentsval = Moments_thresholdCalculator.GetThreshold()
+
+Otsu_thresholdCalculator = vtkITK.vtkITKImageThresholdCalculator()
+Otsu_thresholdCalculator.SetInputData(masterVolumeNode.GetImageData())
+Otsu_thresholdCalculator.SetMethodToOtsu()
+Otsu_thresholdCalculator.Update()
+Otsuval = Otsu_thresholdCalculator.GetThreshold()
 
 #MAX ENTROPY THRESHOLD OF COLUMELLA
 #OverwriteMode: OverwriteNone
@@ -146,6 +155,8 @@ data.append(ID+', '+str(colvol)+'\n')
 # and write everything back
 with open('C:\\Users\\jeffzeyl\\Desktop\\Volumes.txt', 'w') as file:
     file.writelines( data )
+#
+#
 
 
 #MAX ENTROPY THRESHOLD OF ECD
