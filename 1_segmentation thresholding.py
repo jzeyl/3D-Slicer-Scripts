@@ -54,7 +54,7 @@ slicer.mrmlScene.AddNode(segmentEditorNode)#add segment editor node to scene
 
 
 #if previously saved
-#segmentEditorNode = = slicer.util.getNode('SegmentEditor')
+#segmentEditorNode = slicer.util.getNode('SegmentEditor')
 
 # Create segment editor to get access to effects
 segmentEditorWidget = slicer.qMRMLSegmentEditorWidget()

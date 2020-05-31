@@ -38,3 +38,5 @@ writer = vtk.vtkPNGWriter()
 writer.SetFileName("c:/tmp/screenshot.png")
 writer.SetInputConnection(wti.GetOutputPort())
 writer.Write()
+
+string = "run("Image Sequence...", "open=[E:/0backof head analyses/5_Feb7crops/CFranc-01-2019/cfranc-01-2019 backofhead0000.tif] sort")"
