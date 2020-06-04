@@ -1,10 +1,7 @@
 threshcol = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh col")
-#MAX ENTROPY THRESHOLD OF COLUMELLA
-#OverwriteMode: OverwriteNone
-#SelectedSegmentID: threshcol
-#ActiveEffectName: "Threshold"
-#MaskMode: PaintAllowedInsideSingleSegment #segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInsideVisibleSegments)
-#MaskSegmentID: paintcol
+segmentationDisplayNode.SetSegmentOpacity3D(ID+" thresh col", 1)
+segmentationNode.GetSegmentation().GetSegment(ID+" thresh col").SetColor(0,0,1)
+
 segmentEditorNode.SetOverwriteMode(slicer.vtkMRMLSegmentEditorNode.OverwriteNone)
 segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInsideSingleSegment)
 segmentEditorNode.SetSelectedSegmentID(ID+" thresh col")
@@ -82,3 +79,8 @@ effect.self().onApply()#apply separate
 
 ####################SAVE#####################
 ####################SAVE#####################
+
+# Change one segment display properties
+segmentId = segmentation.GetSegmentIdBySegmentName("Segment_1")
+segmentationDisplayNode.SetSegmentOpacity2DOutline(segmentId, 0.0)
+segmentation.GetSegment(segmentId).SetColor(1,0,0)  # color should be set in segmentation node

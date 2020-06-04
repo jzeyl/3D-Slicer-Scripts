@@ -1,3 +1,8 @@
+slicer.util.loadVolume("C:\\Users\\jeffzeyl\\Desktop\\RD01r2_2019\\pigeon0000.tif", returnNode=True)
+#"C:\\Users\\jeffzeyl\\Desktop\\RD01r2_2019\\pigeon0000.tif"
+ID = "pigeontest"
+spacing = 0.018
+
 folder = "F:\\0CT Scans\\3_Jul19 2019\\19072019_03 CRC003\\ear extracted oct 17\\earcrp"
 #\\Substack (135-715)0000.tif
 ID = "CRC001 2019"##############INPUT SPECIMEN ID HERE
@@ -135,3 +140,84 @@ folder = "E:\\0backof head analyses\\5_Feb7crops\\CFranc-01-2019\\earcrp"
 #\Substack (379-1147)0000.tif
 ID = "Cfranc 01 2010"
 spacing = 0.015
+
+#TM of laughing dove cut off
+#folder = "E:\\0backof head analyses\\6_Feb12crops\\LD-01-2019\\earcrp"
+##\Substack (20-974)0000.tif
+#ID = "LD-01 2019"
+#spacing = 0.00999993
+
+#ECD tip cut off
+#folder = "E:\\0backof head analyses\\6_Feb12crops\\Bouc-01-2020\\earcrp"
+##\Substack (1-865)0000.tif
+#ID = "Bcouc 01 2020"
+#spacing = 0.015
+
+folder = "E:\\0backof head analyses\\6_Feb12crops\\Cfisc-01-2019\\earcrp"
+#\\Substack (230-1105)0000.tif
+ID = "Cfisc 01 2019"
+spacing = 0.011
+
+folder = "E:\\0backof head analyses\\6_Feb12crops\\FTdrong-01-2019\\earcrp"
+#\Substack (165-934)0000.tif
+ID = "FTdrong 01 2019"
+spacing = 0.01200001
+
+folder = "F:\\0CT Scans\\6_Sept 2 2019\\02092019_04 CMH-01-2019\\cmhear\\crp"
+#\\cmhear0000.tif
+ID = "CMH 01 2019"
+spacing = 0.01499995
+
+slicer.util.loadVolume("F:\\0CT Scans\\4_Cambridge Jul 2019\\Lesser black backed gull [2019-07-23 15.37.12]\\Lesser black backed gull_01\\earregion crped\\Lesser black backed gull_010000.tif", returnNode=True)
+#\
+slicer.mrmlScene.SetRootDirectory("F:\\0CT Scans\\4_Cambridge Jul 2019\\Lesser black backed gull [2019-07-23 15.37.12]\\Lesser black backed gull_01\\earregion crped")
+ID = "LBBG01 2019"
+spacing = 0.0304
+
+folder = "F:\\0CT Scans\\4_Cambridge Jul 2019\\WSP-01-.... BAS [2019-07-23 16.15.17]\\WSP-01-.... BAS_01\\colaug12"
+#\WSP-01-...0000.tif
+ID = "WSP 01 2019"
+spacing = 0.0108087826520205
+
+folder = "F:\\0CT Scans\\4_Cambridge Jul 2019\\SPS-02-BAS [2019-07-23 11.42.04]\\SPS-02-BAS_01\\earcrp"
+#\SPS-02-BAS_010000.tif
+ID = "SPS-02-BAS 2019"
+spacing = 0.0263860908566245
+
+folder = "F:\\0CT Scans\\4_Cambridge Jul 2019\\AP-01-2011 [2019-07-23 09.42.20]\\16Bearcrp Nov 27"
+#\Substack (865-1612)0000.tif
+ID = "AP-01-2011"
+spacing = 0.0153838621693904
+
+#next batch starting Jun 2
+
+folder = "D:\\0backof head analyses\\2_Oct 30 earregion expt\\5_Pcrow-1-2019\\crowbetter\\earregion"
+#\crowbetter0000.tif
+ID = "Pcrow 01 2019"
+spacing = 0.021875
+
+folder = "D:\\0backof head analyses\\3_Dec 12 crp export\\06 LF-01-2019\\earcrp"
+#\Substack (167-963)0000.tif
+ID = "LF 01 2019"
+spacing = 0.027
+
+folder = "D:\\0backof head analyses\\3_Dec 12 crp export\\05 st007\\earcrp"
+#\Substack (144-637)0000.tif
+ID = "ST007 2019"
+spacing = 0.023
+
+folder = "D:\\0backof head analyses\\5_Feb7crops\\TO003\\earcrp"
+#\Substack (300-957)0000.tif
+ID = "T0003 2020"
+spacing = 0.017
+
+folder = "D:\\0backof head analyses\\6_Feb12crops\\LB\\earcrp"
+#\Substack (258-1057)0000.tif
+ID = "LBird 2020"
+spacing = 0.011
+
+folder = "D:\\0backof head analyses\\7_Feb23 crops\\23022020 CT Scans\\24032020_02 RN-02-2019\\Stack\\earcrp"
+#\Substack (1430-1833)0000.tif
+ID = "RN 02 2019"
+spacing = 
+
