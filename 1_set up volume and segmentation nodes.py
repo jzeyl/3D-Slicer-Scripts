@@ -20,7 +20,6 @@ slicer.mrmlScene.SetRootDirectory(folder)
 # Load dry bone CT of skull into the scene and run this script to automatically segment endocranium
 #slicer.util.loadVolume("C:\\Users\\jeffzeyl\\Desktop\\RD01r2_2019\\pigeon0000.tif", returnNode=True)
 
-
 masterVolumeNode = slicer.mrmlScene.GetFirstNodeByClass("vtkMRMLScalarVolumeNode")
 #or can get the volume node by the name slicer.util.getNode('pigeon0000')
 #print(mastervolumeNode)
@@ -29,10 +28,6 @@ import itertools
 imagespacing = list(itertools.repeat(spacing, 3))
 masterVolumeNode.SetSpacing(imagespacing)#assign resolution to the volume
 volumeScalarRange = masterVolumeNode.GetImageData().GetScalarRange()
-
-#IF ALREADY SAVED SCENE:
-#segmentationNode = slicer.util.getNode('Segmentation')
-#segmentationNode = slicer.mrmlScene.GetFirstNodeByClass("vtkMRMLSegmentationNode")
 
 # Create SEGMENTATION NODE AND LINK TO VOLUME (if there isn't one already existing! otherwise, node can be named using the preceding command)
 segmentationNode = slicer.vtkMRMLSegmentationNode()#name segmentation node
@@ -50,34 +45,18 @@ threshecd = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh ECD")
 
 #make segmentation display node
 segmentationDisplayNode=segmentationNode.GetDisplayNode()
-#segmentationDisplayNode.SetSegmentOpacity2DOutline(ID+" paint col", 0.5)
-segmentationDisplayNode.SetSegmentOpacity3D(ID+" thresh umbo", 0.50)
-segmentationDisplayNode.SetSegmentOpacity3D(ID+" thresh ECD", 0.50)
-segmentationDisplayNode.SetSegmentOpacity3D(ID+" paint col", 0.50)
-segmentationDisplayNode.SetSegmentOpacity3D(ID+" paint col", 0.50)
+#set 3d opacity at 0.5
+#segmentationDisplayNode.SetSegmentOpacity3D(ID+" thresh umbo", 0.50)
+#segmentationDisplayNode.SetSegmentOpacity3D(ID+" thresh ECD", 0.50)
+#segmentationDisplayNode.SetSegmentOpacity3D(ID+" paint col", 0.50)
 
 #but segment colour set in segmentation node:
-segmentationNode.GetSegmentation().GetSegment(ID+" paint col").SetColor(1,0,0)
-segmentationNode.GetSegmentation().GetSegment(ID+" paint col").SetColor(1,0,0)
-segmentationNode.GetSegmentation().GetSegment(ID+" paint col").SetColor(1,0,0)
-segmentationNode.GetSegmentation().GetSegment(ID+" paint col").SetColor(1,0,0)
-
-
-# Change one segment display properties
-paintcoldisplay = segmentation.GetSegmentIdBySegmentName(ID+" paint col")
-segmentationDisplayNode.SetSegmentOpacity2DOutline(segmentId, 0.0)
-segmentation.GetSegment(segmentId).SetColor(1,0,0)  # color should be set in segmentation node
-
-segmentationDisplayNode=segmentationNode.GetDisplayNode()
-segmentation=segmentationNode.GetSegmentation()
+segmentationNode.GetSegmentation().GetSegment(ID+" thresh umbo").SetColor(1,0,0)
+segmentationNode.GetSegmentation().GetSegment(ID+" thresh ECD").SetColor(0,1,0)
 
 #add segment editor node
 segmentEditorNode = slicer.vtkMRMLSegmentEditorNode()
 slicer.mrmlScene.AddNode(segmentEditorNode)#add segment editor node to scene
-
-
-#if previously saved
-#segmentEditorNode = slicer.util.getNode('SegmentEditor')
 
 # Create segment editor to get access to effects
 segmentEditorWidget = slicer.qMRMLSegmentEditorWidget()

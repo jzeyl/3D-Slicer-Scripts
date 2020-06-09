@@ -21,7 +21,7 @@ def UpdateSlicePlane(param1=None, param2=None):
 
 # Get markup node AND MARKUPS
 sliceNode = slicer.app.layoutManager().sliceWidget('Red').mrmlSliceNode()
-markups = slicer.util.getNode('BSK01-2019 TM')
+markups = slicer.util.getNode('F')
 
 # Update slice plane manually
 UpdateSlicePlane()

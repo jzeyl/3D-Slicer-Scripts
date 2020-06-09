@@ -1,5 +1,5 @@
-Set slice position and orientation from a normal vector and position
-This code snippet shows how to display a slice view defined by a normal vector and position in an anatomically sensible way: rotating slice view so that "up" direction (or "right" direction) is towards an anatomical axis.
+#Set slice position and orientation from a normal vector and position
+#This code snippet shows how to display a slice view defined by a normal vector and position in an anatomically sensible way: rotating slice view so that "up" direction (or "right" direction) is towards an anatomical axis.
 
 def setSlicePoseFromSliceNormalAndPosition(sliceNode, sliceNormal, slicePosition, defaultViewUpDirection=None, backupViewRightDirection=None):
     """
@@ -32,3 +32,17 @@ def setSlicePoseFromSliceNormalAndPosition(sliceNode, sliceNormal, slicePosition
     sliceNode.SetSliceToRASByNTP(sliceNormalStandardized[0], sliceNormalStandardized[1], sliceNormalStandardized[2],
         sliceAxisX[0], sliceAxisX[1], sliceAxisX[2],
         slicePosition[0], slicePosition[1], slicePosition[2], 0)
+
+
+sliceNode = getNode('vtkMRMLSliceNodeRed')
+
+sliceNormal = [-1,-0.0599251,-0.08878339]
+slicePosition = [ -8.865168, -6.993496, 9.008976]
+setSlicePoseFromSliceNormalAndPosition(sliceNode, sliceNormal, slicePosition)
+
+
+file_input = open("C:\\Users\\jeffzeyl\\Desktop\\copyoutput\\Jun5 batch\\DCSB\\FPslice_normalsandpsotion.txt",'r')
+list = file_input.readlines(0)
+print(list)
+
+#then take screen capture of and save as TIFF

@@ -219,5 +219,54 @@ spacing = 0.011
 folder = "D:\\0backof head analyses\\7_Feb23 crops\\23022020 CT Scans\\24032020_02 RN-02-2019\\Stack\\earcrp"
 #\Substack (1430-1833)0000.tif
 ID = "RN 02 2019"
-spacing = 
+spacing = 0.02500002
 
+folder = "D:\\0backof head analyses\\5_Feb7crops\\Cparr-02-2019\\earcrp"
+#\Substack (383-962)0000.tif
+ID = "Cparr-02-2019"
+spacing = 0.02456061
+
+folder = "F:\\0CT Scans\\2_Apr26 2019\\26042019_04 Double-Collared Sunbird1\\16bexport oct17\\earcrp"
+#\Substack (172-595)0000.tif
+ID = "DCSB 01 2019"
+spacing = 0.015
+
+folder = "F:\\0CT Scans\\5_Aug 20 2019\\20082019_06 BSH-01-2019\\earcrp Mar3 2020"
+#\Substack (348-1368)0000.tif
+ID = "BSH-01-2019"
+spacing = 0.01833329
+
+folder = "F:\\0CT Scans\\5_Aug 20 2019\\20082019_07 RED-01-2019\\earregionsept2\\earcrp"
+#\earregionsept20000.tif
+ID = "RED 01 2019"
+spacing = 0.01050001
+
+folder = "F:\\0CT Scans\\6_Sept 2 2019\\02092019_02 ARP-01-2019\\earcrp CAF\\earcrp"
+#\Substack (1-861)0000.tif
+ID = "ARP-01-2019"
+spacing = 0.01499995
+
+folder = "F:\\0CT Scans\\2_Apr26 2019\\26042019_05 Orange breasted Sunbird 1\\OBSBback of head\\earcrp"
+#\Substack (127-558)0000.tif
+ID = "OBSB 01 2019"
+spacing = 0.01500004
+
+folder = "F:\\0CT Scans\\5_Aug 20 2019\\20082019_02 PF-01-2019\\earregion sep2 CAF\\earcropped"
+#\earregion sep2 CAF0000.tif
+ID = "PF-01-2019"
+spacing = 0.01933329
+
+folder = "F:\\0CT Scans\\2_Apr26 2019\\26042019_02 Ground Hornbill 1\\Ear export oct 17\\earcrp"
+#\Substack (1-464)0000.tif
+ID = "GHB 01 2019"
+spacing = 0.065
+
+folder = "F:\\0CT Scans\\3_Jul19 2019\\19072019_07 SPP-01\\export oct 17 ear\\earcrp"
+#\Substack (139-747)0000.tif
+ID = "SPP 01 2019"
+spacing = 0.02000002
+
+folder = "F:\\0CT Scans\\3_Jul19 2019\\19072019_01 TO_02\\oct17 back of head 16b\\earcrp"
+#\Substack (139-797)0000.tif
+ID = "TO-02 2019"
+spacing = 0.01999995

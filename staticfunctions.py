@@ -2,7 +2,6 @@ def colthresh():
     threshcol = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh col")
     segmentationDisplayNode.SetSegmentOpacity3D(ID+" thresh col", 1)
     segmentationNode.GetSegmentation().GetSegment(ID+" thresh col").SetColor(0,0,1)
-
     segmentEditorNode.SetOverwriteMode(slicer.vtkMRMLSegmentEditorNode.OverwriteNone)
     segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInsideSingleSegment)
     segmentEditorNode.SetSelectedSegmentID(ID+" thresh col")
@@ -22,22 +21,19 @@ def colkeeplargestisland():
     effect.self().onApply()#apply separate
 
 def writecolvoltofile():
-        #OR STORE STATS AS DICTIONARY:
+    #OR STORE STATS AS DICTIONARY:
     import SegmentStatistics
     segStatLogic = SegmentStatistics.SegmentStatisticsLogic()
     segStatLogic.getParameterNode().SetParameter("Segmentation", segmentationNode.GetID())
     segStatLogic.computeStatistics()
     stats = segStatLogic.getStatistics()
     colvol = stats[ID+" thresh col",'LabelmapSegmentStatisticsPlugin.volume_mm3']
-
     #Write to text file
     # with is like your try .. finally block in this case
     with open('C:\\Users\\jeffzeyl\\Desktop\\Volumes.txt', 'r') as file:
         # read a list of lines into data
         data = file.readlines()
-
     data.append(ID+', '+str(colvol)+'\n')
-
     # and write everything back
     with open('C:\\Users\\jeffzeyl\\Desktop\\Volumes.txt', 'w') as file:
         file.writelines( data )
@@ -86,17 +82,17 @@ def umbo_ME_ISO_apply():
     effect.setParameter("MaximumThreshold",str(Maxentval))
     effect.self().onApply()#apply separate
 
-def addfiducialtemplate():
-    global FIDNode1 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-    FIDNode1.SetName(ID+" TM")#creates a new segmentation
-    global FIDNode2 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-    FIDNode2.SetName(ID+" RW")#creates a new segmentation
-    FIDNode3 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-    FIDNode3.SetName(ID+" CA")#creates a new segmentation
-    FIDNode4 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-    FIDNode4.SetName(ID+" EC")#creates a new segmentation
-    FIDNode5 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-    FIDNode5.SetName(ID+"ECandTMmrk_outline")#creates a new segmentation
+#def addfiducialtemplate():
+#    global FIDNode1 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+#    FIDNode1.SetName(ID+" TM")#creates a new segmentation
+#    global FIDNode2 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+#    FIDNode2.SetName(ID+" RW")#creates a new segmentation
+#    FIDNode3 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+#    FIDNode3.SetName(ID+" CA")#creates a new segmentation
+#    FIDNode4 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+#    FIDNode4.SetName(ID+" EC")#creates a new segmentation
+#    FIDNode5 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+#    FIDNode5.SetName(ID+"ECandTMmrk_outline")#creates a new segmentation
 
 def setfiducialdisplay():
     #set ficudial display nodes

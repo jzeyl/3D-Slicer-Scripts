@@ -4,7 +4,6 @@
 
 #markups fiducial node
 inputMarkups = getNode(ID+'ECandTMmrk_outline')
-
 #create model node
 ECTMModel = slicer.mrmlScene.AddNode(slicer.vtkMRMLModelNode())#adding a node to scene
 ECTMModel.SetName(ID+'EC_TM_mod')
@@ -18,8 +17,9 @@ markupsToModel.SetAutoUpdateOutput(True)
 markupsToModel.SetAndObserveMarkupsNodeID(inputMarkups.GetID())#set input node
 markupsToModel.SetAndObserveModelNodeID(ECTMModel.GetID())#set model node (only needed for the first one)
 markupsToModel.SetModelType(0)#closed surface
-
 ####check the coverage of the model in 4d view
+
+
 
 # CONVERT TO segmentation
 modeloutlinenode = slicer.util.getNode(ID+'EC_TM_mod')#create model node from the just created model

@@ -91,18 +91,7 @@ for i in range(0,numberfiducialpoints):
 
 
 
-## Write to STL file
-#colout = segmentationNode.GetClosedSurfaceRepresentation(thresh_EC_TMseg)
-#writer = vtk.vtkSTLWriter()
-#writer.SetInputData(colout)
-#writer.SetFileName("c:/tmp/something.stl")
-#writer.Update()
-#
-#writer = vtk.vtkSTLWriter()
-#writer.SetInputData(surfaceMesh)
-#writer.SetFileName("C:/Users/jeffzeyl/Desktop/Volumetest.stl")
-#writer.Update()
-#"C:\Users\jeffzeyl\Desktop\Volumetest.stl"
+
 #
 ## Make segmentation results nicely visible in 3D
 #segmentationDisplayNode = segmentationNode.GetDisplayNode()

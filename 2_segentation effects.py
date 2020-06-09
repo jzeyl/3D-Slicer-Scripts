@@ -84,3 +84,7 @@ effect.self().onApply()#apply separate
 segmentId = segmentation.GetSegmentIdBySegmentName("Segment_1")
 segmentationDisplayNode.SetSegmentOpacity2DOutline(segmentId, 0.0)
 segmentation.GetSegment(segmentId).SetColor(1,0,0)  # color should be set in segmentation node
+
+def test():
+    FIDNode1 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+    FIDNode1.SetName(ID+" TM")#creates a new segmentation

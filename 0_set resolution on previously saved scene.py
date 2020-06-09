@@ -9,6 +9,7 @@ volumeScalarRange = masterVolumeNode.GetImageData().GetScalarRange()
 #set up segmentatin node
 segmentationNode = slicer.util.getNode('Segmentation')
 
+segmentationDisplayNode=segmentationNode.GetDisplayNode()
 #if previously saved
 segmentEditorNode = slicer.util.getNode('SegmentEditor')
 
