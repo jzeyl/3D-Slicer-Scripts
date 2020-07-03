@@ -47,7 +47,7 @@ effect.setParameter("MaximumThreshold",str(Maxentval))
 effect.self().onApply()#apply separate
 
 #set mod region segment visibility off
-segmentationDisplayNode.SetSegmentVisibility(ID+'EC_TM_mod',0)
+#segmentationDisplayNode.SetSegmentVisibility(ID+'EC_TM_mod',0)
 #
 # ###########2 RW curve markup to model
 #name markups fiducial node

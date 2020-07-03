@@ -2,7 +2,7 @@
 #set up resolution
 masterVolumeNode = slicer.mrmlScene.GetFirstNodeByClass("vtkMRMLScalarVolumeNode")
 import itertools
-imagespacing = list(itertools.repeat(spacing, 3))
+imagespacing = [spacing]*3
 masterVolumeNode.SetSpacing(imagespacing)#assign resolution to the volume
 volumeScalarRange = masterVolumeNode.GetImageData().GetScalarRange()
 
@@ -38,6 +38,10 @@ FIDNode1 = getNode(ID+" TM")
 FIDNode2 = getNode(ID+" RW")
 FIDNode3 = getNode(ID+" CA")
 FIDNode4 = getNode(ID+" EC")
+
+FIDNode5 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+FIDNode5.SetName(ID+"ECandTMmrk_outline")#creates a new segmentation
+
 FIDNode5 = getNode(ID+"ECandTMmrk_outline")
 
 

@@ -1,33 +1,3 @@
-specieslabel = "Fratercula arctica"
-
-view=slicer.app.layoutManager().threeDWidget(0).threeDView()
-# Set text to "Something"
-view.cornerAnnotation().SetText(vtk.vtkCornerAnnotation.UpperRight,specieslabel)
-# Set color to red
-view.cornerAnnotation().GetTextProperty().SetColor(1,1,0)#set text color
-# Update the view
-view.forceRender()
-
-#create directory for gifs
-import os
-gifdir = slicedir+'\\'+ID+'gif'
-os.mkdir(gifdir)
-
-#capture 3d rotation
-layoutManager = slicer.app.layoutManager()
-threeDWidget = layoutManager.threeDWidget(0)
-threeDView = threeDWidget.threeDView()
-viewNodeID = 'vtkMRMLViewNode1'
-cap3d = ScreenCapture.ScreenCaptureLogic()
-view = cap3d.viewFromNode(slicer.mrmlScene.GetNodeByID(viewNodeID))
-for i in range(25):
-    threeDView.yaw()#rotate thre 3D
-    threeDView.yaw()#rotate thre 3D
-    cap3d.captureImageFromView(view,gifdir+'\\'+ID+'gif'+str(i)+'.png')#slicer.mrmlScene.GetRootDirectory()
-
-
-#os.path.join(gifdir)
-#gifdir = 'D:\\Analysis_plots\\3dslicerscreenshots\\BO-02-2019\\BO-02-2019gif'
 
 #make list of imagepaths
 imgpaths = []
@@ -107,7 +77,4 @@ listdir_fullpath(d)
 #slice sweep
 import ScreenCapture
 ScreenCapture.ScreenCaptureLogic().captureSliceSweep(getNode('vtkMRMLSliceNodeRed'), -125.0, 75.0, 30, "c:/tmp", "image_%05d.png")
-
-
-
 

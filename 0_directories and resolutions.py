@@ -270,3 +270,75 @@ folder = "F:\\0CT Scans\\3_Jul19 2019\\19072019_01 TO_02\\oct17 back of head 16b
 #\Substack (139-797)0000.tif
 ID = "TO-02 2019"
 spacing = 0.01999995
+
+
+#Jun 15
+
+folder = "D:\\0backof head analyses\\6_Feb12crops\\Bouc-01-2020\\ear_Crp"
+#\\Substack (31-853)0000.tif
+ID = "BCouc01 2020"
+spacing = 0.015
+
+folder = "D:\\0backof head analyses\\6_Feb12crops\\Othrush-01-2019\\earcrp"
+#\Substack (94-1000)0000.tif
+ID = "Othrush 01 2019"
+spacing = 0.011
+
+folder = "F:\\0morphosource witmer\\albatross\\OUVC_10905_M44786-81307\\WitmerLab_Black-footed_albatross_OUVC_10905_diceCT_TIFF\\crp"
+#\WitmerLab_Black-footed_albatross_OUVC_10905_diceCT_TIFF6048.tif
+ID = "BFAlb-01-2020"
+spacing = 0.0493
+
+folder = "F:\\0morphosource witmer\\alca torda\\atorda\\crpear"
+#\atorda1523.tif
+ID = "AtordaWitmer-01-2019"
+spacing = 0.0493
+
+folder = "F:\\0morphosource witmer\\caspiantern\\OUVC_11504_M42995-77562\\WitmerLab_Caspian-tern_OUVC11504_prescan_DICOM\\crp"
+#\WitmerLab_Caspian-tern_OUVC11504_prescan_DICOM2121.tif
+ID = "CternWitmer-01-2020"
+spacing = 0.0493
+
+folder = "F:\\0morphosource witmer\\northerngannet\\OUVC_10995_M42184-76028\\earregion"
+#\OUVC_10995_M42184-76028 kept stack0000.tif
+ID = "NgannetWitmer-01-2020"
+spacing = 0.0986
+
+folder = "F:\\0CT Scans\\1_Jan 2019\\17012019_01 CC209\\oct19 export 16b\\earcrp"
+#\Substack (470-831)0000.tif
+ID = "CC209 2019"
+spacing = 0.03
+
+folder = "D:\\0_Open data\\TIFFS bird skulls\\aquatic\\shallow dabblers\\Anas platyrhynchos digi\\Anas platyrhynchos\\8bit\\crp"
+#\Substack (66-115)0000.tif
+ID = "MDuck-01 2020"
+imagespacing = [0.1221,0.1221,0.5]
+#spacing = 0.1221 for x and y, 0.56 for Z
+
+#TO DO
+folder = "D:\\0backof head analyses\\6_Feb12crops\\KTC-01-2020\\earcrp"
+#\Substack (261-1147)0000.tif
+ID = "KTC-01-2020"
+spacing = 0.015
+#
+folder = "D:\\0backof head analyses\\6_Feb12crops\\STch-01-2019\\earcrp"
+#\Substack (120-1005)0000.tif
+ID = "Stch-01-2019"
+spacing = 0.01099993
+#
+##scene already
+folder = "D:\\0backof head analyses\\2_Oct 30 earregion expt\\1_RCL-01-2019\\earcrp"
+#\1_RCL-01-20190000.tif
+ID = "RCL-01-2019"
+spacing = 0.00857135
+
+folder = "D:\\0backof head analyses\\2_Oct 30 earregion expt\\2_Apip-02-2019\\earcrp"
+#\\2_Apip-02-20190000.tif
+ID = "Apip-02-2019"
+spacing = 0.00950000
+
+folder = "D:\\0backof head analyses\\2_Oct 30 earregion expt\\3_CLC-01-2019\\earcrp"
+#\Substack (1200-2168)0000.tif
+ID = "CLC-01-2019"
+spacing = 0.01
+
