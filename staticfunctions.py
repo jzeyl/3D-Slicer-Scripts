@@ -82,17 +82,22 @@ def umbo_ME_ISO_apply():
     effect.setParameter("MaximumThreshold",str(Maxentval))
     effect.self().onApply()#apply separate
 
-#def addfiducialtemplate():
-#    global FIDNode1 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-#    FIDNode1.SetName(ID+" TM")#creates a new segmentation
-#    global FIDNode2 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-#    FIDNode2.SetName(ID+" RW")#creates a new segmentation
-#    FIDNode3 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-#    FIDNode3.SetName(ID+" CA")#creates a new segmentation
-#    FIDNode4 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-#    FIDNode4.SetName(ID+" EC")#creates a new segmentation
-#    FIDNode5 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-#    FIDNode5.SetName(ID+"ECandTMmrk_outline")#creates a new segmentation
+def addfiducialtemplate():
+    global FIDNode1
+    FIDNode1 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+    FIDNode1.SetName(ID+" TM")#creates a new segmentation
+    global FIDNode2
+    FIDNode2 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+    FIDNode2.SetName(ID+" RW")#creates a new segmentation
+    global FIDNode3
+    FIDNode3 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+    FIDNode3.SetName(ID+" CA")#creates a new segmentation
+    global FIDNode4
+    FIDNode4 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+    FIDNode4.SetName(ID+" EC")#creates a new segmentation
+    global FIDNode5
+    FIDNode5 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+    FIDNode5.SetName(ID+"ECandTMmrk_outline")#creates a new segmentation
 
 def setfiducialdisplay():
     #set ficudial display nodes
@@ -161,4 +166,115 @@ def ETmarkuptomodel():
     markupsToModel.SetAndObserveModelNodeID(ECTMModel.GetID())#set model node (only needed for the first one)
     markupsToModel.SetModelType(0)#closed surface
     ####check the coverage of the model in 4d view
+
+
+
+#MARKUPS TO MODELS
+# CONVERT TO segmentation
+modeloutlinenode = slicer.util.getNode(ID+'EC_TM_mod')#create model node from the just created model
+slicer.modules.segmentations.logic().ImportModelToSegmentationNode(modeloutlinenode,segmentationNode,"tosegment")
+
+#remove visibility of 'EC_TM_mod' model and 
+modeloutlinenode.SetDisplayVisibility(0)
+#create maxent segment, isodata segment, and subtract the two
+thresh_EC_TMseg = segmentationNode.GetSegmentation().AddEmptySegment(ID+" ECplusTM")#create new segmentation ID
+segmentationNode.GetSegmentation().GetSegment(ID+" ECplusTM").SetColor(1,0,0)
+
+#momentsISODATA-MAXENT THRESHOLD FOR UMBO
+segmentEditorNode.SetOverwriteMode(slicer.vtkMRMLSegmentEditorNode.OverwriteNone)
+segmentEditorNode.SetMaskMode(slicer.vtkMRMLSegmentEditorNode.PaintAllowedInsideSingleSegment)
+segmentEditorNode.SetSelectedSegmentID(ID+" ECplusTM")#
+#segmentEditorNode.SetSelectedSegmentID(EC_TM_modthresh)#
+segmentEditorNode.SetMaskSegmentID(ID+'EC_TM_mod')
+segmentEditorWidget.setActiveEffectByName("Threshold")
+effect = segmentEditorWidget.activeEffect()
+effect.setParameter("MinimumThreshold", str(ISOval))#str(ISOval)
+effect.setParameter("MaximumThreshold",str(Maxentval))
+effect.self().onApply()#apply separate
+
+
+def opennewvolume():
+    global filesinfolder
+    filesinfolder = slicer.util.getFilesInDirectory(folder)
+    slicer.mrmlScene.SetRootDirectory(folder)
+    global vol
+    vol = "tif"
+    global volfile
+    volfile = [i for i in filesinfolder if vol in i] 
+    volfile
+    #load volume
+    slicer.util.loadVolume(volfile[0])
+    #SET ID AND SPACING
+    #set up volume resolution
+    global masterVolumeNode
+    masterVolumeNode = slicer.mrmlScene.GetFirstNodeByClass("vtkMRMLScalarVolumeNode")
+    import itertools
+    global imagespacing
+    imagespacing = [spacing]*3
+    masterVolumeNode.SetSpacing(imagespacing)#assign resolution to the volume
+    global volumeScalarRange
+    volumeScalarRange = masterVolumeNode.GetImageData().GetScalarRange()
+
+
+#set up segmentatin node
+
+#if previously saved
+#segmentationNode = slicer.util.getNode('Segmentation')
+#segmentEditorNode = slicer.util.getNode('SegmentEditor')
+
+
+# Create SEGMENTATION NODE AND LINK TO VOLUME (if there isn't one already existing! otherwise, node can be named using the preceding command)
+segmentationNode = slicer.vtkMRMLSegmentationNode()#name segmentation node
+slicer.mrmlScene.AddNode(segmentationNode)#add the node to the scene
+segmentationNode.CreateDefaultDisplayNodes() # only needed for display
+segmentationDisplayNode=segmentationNode.GetDisplayNode()
+
+segmentationNode.SetReferenceImageGeometryParameterFromVolumeNode(masterVolumeNode)#link the segmentation to the volume
+#CREATE EMPTY SEGMENTS
+paintcol = segmentationNode.GetSegmentation().AddEmptySegment(ID+" paint col")
+paintumbo = segmentationNode.GetSegmentation().AddEmptySegment(ID+" paint umbo")
+threshumbo = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh umbo")
+paintecd = segmentationNode.GetSegmentation().AddEmptySegment(ID+" paint ECD")
+
+threshecd = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh ECD")
+
+#threshcol = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh col")
+#add segment editor node
+
+segmentEditorNode = slicer.vtkMRMLSegmentEditorNode()
+slicer.mrmlScene.AddNode(segmentEditorNode)#add segment editor node to scene
+#if previously saved
+#segmentEditorNode = slicer.util.getNode('SegmentEditor')
+# Create segment editor to get access to effects
+segmentEditorWidget = slicer.qMRMLSegmentEditorWidget()
+segmentEditorWidget.setMRMLScene(slicer.mrmlScene)#connect widget to scene
+segmentEditorWidget.setMRMLSegmentEditorNode(segmentEditorNode)#connect segment editor to editor widget
+segmentEditorWidget.setSegmentationNode(segmentationNode)#connect segmentation node
+segmentEditorWidget.setMasterVolumeNode(masterVolumeNode)#connect master node
+# Compute bone threshold value automatically
+import vtkITK
+
+ME_thresholdCalculator = vtkITK.vtkITKImageThresholdCalculator()
+ME_thresholdCalculator.SetInputData(masterVolumeNode.GetImageData())
+ME_thresholdCalculator.SetMethodToMaximumEntropy()
+ME_thresholdCalculator.Update()
+Maxentval = ME_thresholdCalculator.GetThreshold()
+
+ISO_thresholdCalculator = vtkITK.vtkITKImageThresholdCalculator()
+ISO_thresholdCalculator.SetInputData(masterVolumeNode.GetImageData())
+ISO_thresholdCalculator.SetMethodToIsoData()
+ISO_thresholdCalculator.Update()
+ISOval = ISO_thresholdCalculator.GetThreshold()
+
+Moments_thresholdCalculator = vtkITK.vtkITKImageThresholdCalculator()
+Moments_thresholdCalculator.SetInputData(masterVolumeNode.GetImageData())
+Moments_thresholdCalculator.SetMethodToMoments()
+Moments_thresholdCalculator.Update()
+Momentsval = Moments_thresholdCalculator.GetThreshold()
+
+Otsu_thresholdCalculator = vtkITK.vtkITKImageThresholdCalculator()
+Otsu_thresholdCalculator.SetInputData(masterVolumeNode.GetImageData())
+Otsu_thresholdCalculator.SetMethodToOtsu()
+Otsu_thresholdCalculator.Update()
+Otsuval = Otsu_thresholdCalculator.GetThreshold()
 
