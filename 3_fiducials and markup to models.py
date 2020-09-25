@@ -1,19 +1,21 @@
 ######################################################################################3
 #import empty fiducial markups
-FIDNode1 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-FIDNode1.SetName(ID+" TM")#creates a new segmentation
-
-FIDNode2 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-FIDNode2.SetName(ID+" RW")#creates a new segmentation
-
-FIDNode3 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-FIDNode3.SetName(ID+" CA")#creates a new segmentation
-
-FIDNode4 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-FIDNode4.SetName(ID+" EC")#creates a new segmentation
-
-FIDNode5 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
-FIDNode5.SetName(ID+"ECandTMmrk_outline")#creates a new segmentation
+def fcsv_template():
+    global FIDNode1
+    FIDNode1 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+    FIDNode1.SetName(ID+" TM")#creates a new segmentation
+    global FIDNode2
+    FIDNode2 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+    FIDNode2.SetName(ID+" RW")#creates a new segmentation
+    global FIDNode3
+    FIDNode3 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+    FIDNode3.SetName(ID+" CA")#creates a new segmentation
+    global FIDNode4 
+    FIDNode4 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+    FIDNode4.SetName(ID+" EC")#creates a new segmentation
+    global FIDNode5
+    FIDNode5 = slicer.mrmlScene.AddNewNodeByClass("vtkMRMLMarkupsFiducialNode")
+    FIDNode5.SetName(ID+"ECandTMmrk_outline")#creates a new segmentation
 
 
 ####SELECT POINTS in GUI###
@@ -21,36 +23,38 @@ FIDNode5.SetName(ID+"ECandTMmrk_outline")#creates a new segmentation
 
 
 #set ficudial display nodes
-FIDNode1DisplayNode = FIDNode1.GetDisplayNode()
-FIDNode1DisplayNode.SetGlyphScale(0.15)
-FIDNode1DisplayNode.SetTextScale(0.1)
-FIDNode1DisplayNode.SetSelectedColor(1,0,0)#red
-
-FIDNode2DisplayNode = FIDNode2.GetDisplayNode()
-FIDNode2DisplayNode.SetGlyphScale(0.15)
-FIDNode2DisplayNode.SetTextScale(0.1)
-FIDNode2DisplayNode.SetSelectedColor(0,1,0)#green
-
-FIDNode3DisplayNode = FIDNode3.GetDisplayNode()
-FIDNode3DisplayNode.SetGlyphScale(0.15)
-FIDNode3DisplayNode.SetTextScale(0.1)
-FIDNode3DisplayNode.SetSelectedColor(1,1,0)#green
-
-FIDNode4DisplayNode = FIDNode4.GetDisplayNode()
-FIDNode4DisplayNode.SetGlyphScale(0.15)
-FIDNode4DisplayNode.SetTextScale(0.1)
-
-FIDNode5DisplayNode = FIDNode5.GetDisplayNode()
-FIDNode5DisplayNode.SetGlyphScale(0.15)
-FIDNode5DisplayNode.SetTextScale(0.1)
-FIDNode5DisplayNode.SetSelectedColor(0,0,0)#black
+def fcsv_display_smaller():
+  global FIDNode1DisplayNode
+  FIDNode1DisplayNode = FIDNode1.GetDisplayNode()
+  FIDNode1DisplayNode.SetGlyphScale(0.15)
+  FIDNode1DisplayNode.SetTextScale(0.1)
+  FIDNode1DisplayNode.SetSelectedColor(1,0,0)#red
+  global FIDNode1DisplayNode2
+  FIDNode2DisplayNode = FIDNode2.GetDisplayNode()
+  FIDNode2DisplayNode.SetGlyphScale(0.15)
+  FIDNode2DisplayNode.SetTextScale(0.1)
+  FIDNode2DisplayNode.SetSelectedColor(0,1,0)#green
+  global FIDNode1DisplayNode3
+  FIDNode3DisplayNode = FIDNode3.GetDisplayNode()
+  FIDNode3DisplayNode.SetGlyphScale(0.15)
+  FIDNode3DisplayNode.SetTextScale(0.1)
+  FIDNode3DisplayNode.SetSelectedColor(1,1,0)#green
+  global FIDNode1DisplayNode4
+  FIDNode4DisplayNode = FIDNode4.GetDisplayNode()
+  FIDNode4DisplayNode.SetGlyphScale(0.15)
+  FIDNode4DisplayNode.SetTextScale(0.1)
+  global FIDNode1DisplayNode5
+  FIDNode5DisplayNode = FIDNode5.GetDisplayNode()
+  FIDNode5DisplayNode.SetGlyphScale(0.15)
+  FIDNode5DisplayNode.SetTextScale(0.1)
+  FIDNode5DisplayNode.SetSelectedColor(0,0,0)#black
+  FIDNode1.SetLocked(1)
+  FIDNode2.SetLocked(1)
+  FIDNode3.SetLocked(1)
+  FIDNode4.SetLocked(1)
+  FIDNode5.SetLocked(1) #keep this one open
 
 #lock the models to they don't get modified (1 = locked, 0 = unlocked)
-FIDNode1.SetLocked(1)
-FIDNode2.SetLocked(1)
-FIDNode3.SetLocked(1)
-FIDNode4.SetLocked(1)
-FIDNode5.SetLocked(1) #keep this one open
 
 #get nodes of TM and EC if already
 #FIDNode1 = slicer.util.getFirstNodeByName('WCP-03-2019 TM')
