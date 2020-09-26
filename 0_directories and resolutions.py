@@ -342,9 +342,6 @@ folder = "D:\\0backof head analyses\\2_Oct 30 earregion expt\\3_CLC-01-2019\\ear
 ID = "CLC-01-2019"
 spacing = 0.01
 
-#Sept 24 2020
-folder = r"E:\August scans backup\Aug 26\KP01MA\earcrp"
-ID = "KP01MA-2019"
-spacing = 0.06499999
+
 
 

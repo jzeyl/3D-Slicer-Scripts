@@ -46,3 +46,11 @@ spacing = 0.03000000
 folder = r"D:\August scans backup\Aug 26\SWG01\earcrp"
 ID = "SWG01"
 spacing = 0.04500000
+
+folder = r"D:\0backof head analyses\6_Feb12crops\LD-01-2019\crpcorrectAug5"
+ID = "LD01-2019"
+spacing = 0.00999993
+
+folder = r"F:\0CT Scans\3_Jul19 2019\19072019_06 TD01 rescan\earcrp Aug 5 2020"
+ID = "TD01-2019"
+spacing = 0.01583335
