@@ -139,7 +139,7 @@ effect.self().onApply()#apply separate
 
 #set mod region segment visibility off
 segmentationDisplayNode.SetSegmentVisibility(ID+"CA_mod",0)
-segmentationDisplayNode.SetSegmentVisibility(ID+" thresh umbo",0)
+segmentationDisplayNode.SetSegmentVisibility(ID+"EC_TM_mod",0)
 
 #set mod region segment visibility off
 segmentationDisplayNode.SetSegmentVisibility(ID+"RW_mod",0)
