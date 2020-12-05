@@ -1,5 +1,6 @@
-folder = r'C:\Users\jeffzeyl\Desktop\copyoutput\Jun5 batch\DCSB'
-
+folder = r'C:\Users\jeffzeyl\Desktop\copyoutput\Sept 27\EMU01'
+ID = "EMU01"
+spacing = 0.05500000
 #folder = 'C:\\Users\\jeffzeyl\\Desktop\\copyoutput\\Jun17 batch\\CC209_2019'
 filesinfolder = slicer.util.getFilesInDirectory(folder)
 
@@ -71,10 +72,10 @@ exec(list[1])#assign sliceposition
 
 setSlicePoseFromSliceNormalAndPosition(sliceNode, sliceNormal, slicePosition)
 
-slicer.mrmlScene.GetNodeByID('vtkMRMLSliceNodeRed').SetRulerType(2)# add thick ruler
+#slicer.mrmlScene.GetNodeByID('vtkMRMLSliceNodeRed').SetRulerType(2)# add thick ruler
 
 import os
-slicedir = 'E:\\Analysis_plots\\3dslicerscreenshots\\'+ID
+slicedir = 'D:\\Analysis_plots\\3dslicerscreenshots\\'+ID
 os.mkdir(slicedir)
 
 import ScreenCapture
@@ -84,6 +85,9 @@ view = cap.viewFromNode(slicer.mrmlScene.GetNodeByID(viewNodeID))
 cap.captureImageFromView(view,slicedir+'\\'+ID+'redsliceFP.tif')
 
 #now select points along columella
+
+slicer.modules.markups.logic().StartPlaceMode(1)
+
 
 #3 points
 def UpdateSlicePlane(param1=None, param2=None):
