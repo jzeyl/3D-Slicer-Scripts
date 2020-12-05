@@ -1,5 +1,7 @@
-Set slice position and orientation from 3 markup fiducials
-Drop 3 markup points in the scene and copy-paste the code below into the Python console. After this, as you move the markups you’ll see the red slice view position and orientation will be set to make it fit to the 3 points.
+#script taken from the nightly script repositoy of 3D Slicer
+
+#Set slice position and orientation from 3 markup fiducials
+#Drop 3 markup points in the scene and copy-paste the code below into the Python console. After this, as you move the markups you’ll see the red slice view position and orientation will be set to make it fit to the 3 points.
 
 # Update plane from fiducial points ###################FUNCTION
 def UpdateSlicePlane(param1=None, param2=None):

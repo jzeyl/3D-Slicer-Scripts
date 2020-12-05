@@ -1,3 +1,5 @@
+#these static functions are added to the slicerrc file so they can be used from within 3D slicer
+
 def colthresh():
     threshcol = segmentationNode.GetSegmentation().AddEmptySegment(ID+" thresh col")
     segmentationDisplayNode.SetSegmentOpacity3D(ID+" thresh col", 1)

@@ -1,3 +1,5 @@
+#script to change background color in 3D slicer
+
 viewNode = slicer.app.layoutManager().threeDWidget(0).mrmlViewNode()
 viewNode.SetBackgroundColor(1,1,1)
 viewNode.SetBackgroundColor2(0,0,0)

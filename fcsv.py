@@ -1,3 +1,4 @@
+#this script imports the fcsv files form the folder and changes the formatting settings
 #filesinfolder = slicer.util.getFilesInDirectory('C:\\Users\\jeffzeyl\\Desktop\\copyoutput\\Jun17 batch\\Acrake01_2020')
 
 fcsvregex = "fcsv"

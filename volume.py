@@ -1,3 +1,5 @@
+#this script imports a tif stack file from a folder
+
 folder = r'C:\Users\jeffzeyl\Desktop\copyoutput\Sept 27\EMU01'
 ID = "EMU01"
 spacing = 0.05500000

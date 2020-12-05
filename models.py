@@ -1,3 +1,5 @@
+#This scripts imports all the stl files from a folder
+
 #filesinfolder = slicer.util.getFilesInDirectory(folder)
 
 stlregex = "stl"
