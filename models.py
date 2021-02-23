@@ -12,18 +12,18 @@ for i in range(0,len(stlfiles)):
 #setcolor of models to all the same colour
 modelnodelist = slicer.util.getNodesByClass('vtkMRMLModelNode')
 
-modelnamelist = []
 #get the names of all the models and put in a list
+modelnamelist = []
 for i in range(len(modelnodelist)):
     modelnamelist.append(slicer.mrmlScene.GetNthNodeByClass(i,'vtkMRMLModelNode').GetName())
 
 
-#set colour of all to white
+#set colour of all models to white
 for i in range(3,len(modelnodelist)):
     slicer.mrmlScene.GetNthNodeByClass(i,'vtkMRMLModelNode').GetDisplayNode().SetColor(1,1,1)
     slicer.mrmlScene.GetNthNodeByClass(i,'vtkMRMLModelNode').GetDisplayNode().SetOpacity(0.5)
 
-#set color specific models to red
+#set color specific models to another colour if desired:
 #slicer.mrmlScene.GetNthNodeByClass(4,'vtkMRMLModelNode').GetDisplayNode().SetColor(1,0,0)
 #slicer.mrmlScene.GetNthNodeByClass(7,'vtkMRMLModelNode').GetDisplayNode().SetColor(1,0,0)
 

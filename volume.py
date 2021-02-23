@@ -1,8 +1,8 @@
 #this script imports a tif stack file from a folder
 
-folder = r'C:\Users\jeffzeyl\Desktop\copyoutput\Sept 27\EMU01'
-ID = "EMU01"
-spacing = 0.05500000
+folder = r'C:\Users\jeffz\Desktop\copyoutput\Jun10 batch\Ostrich01'
+ID = "Ostrich01"
+spacing = 0.08
 #folder = 'C:\\Users\\jeffzeyl\\Desktop\\copyoutput\\Jun17 batch\\CC209_2019'
 filesinfolder = slicer.util.getFilesInDirectory(folder)
 
@@ -76,8 +76,9 @@ setSlicePoseFromSliceNormalAndPosition(sliceNode, sliceNormal, slicePosition)
 
 #slicer.mrmlScene.GetNodeByID('vtkMRMLSliceNodeRed').SetRulerType(2)# add thick ruler
 
+#saved screenshots of the plane view
 import os
-slicedir = 'D:\\Analysis_plots\\3dslicerscreenshots\\'+ID
+slicedir = r'C:\Users\jeffz\Desktop\Screenshots\\'+ID
 os.mkdir(slicedir)
 
 import ScreenCapture
@@ -86,7 +87,7 @@ cap = ScreenCapture.ScreenCaptureLogic()
 view = cap.viewFromNode(slicer.mrmlScene.GetNodeByID(viewNodeID))
 cap.captureImageFromView(view,slicedir+'\\'+ID+'redsliceFP.tif')
 
-#now select points along columella
+###############now select 3 points along columella
 
 slicer.modules.markups.logic().StartPlaceMode(1)
 

@@ -1,4 +1,6 @@
-specieslabel = "Fratercula arctica"
+######ADD SPECIES LABEL TO TOP OF 3D VIEW
+
+specieslabel = "Fratercula arctica" #input species name
 
 view=slicer.app.layoutManager().threeDWidget(0).threeDView()
 # Set text to "Something"
@@ -7,6 +9,8 @@ view.cornerAnnotation().SetText(vtk.vtkCornerAnnotation.UpperRight,specieslabel)
 view.cornerAnnotation().GetTextProperty().SetColor(1,1,0)#set text color
 # Update the view
 view.forceRender()
+
+###############3
 
 #create directory for gifs
 import os

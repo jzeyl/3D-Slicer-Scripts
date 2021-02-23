@@ -1,6 +1,5 @@
 
 ##########################INPUT DATA FOR NEW SESSION
-#scene arleady saved
 #ID = "Flamingo01 2019"
 #spacing = 0.032#yes
 #folder = "F:\\0CT Scans\\1_Jan 2019\\18012018_09 K151\\k151 oct17 16bbackofhead\\earcrp"
