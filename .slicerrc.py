@@ -13,7 +13,7 @@ slicer.util.findChild(slicer.util.mainWindow(), 'LogoLabel').visible = False#rem
 #change colours of 3d viewer to be a black-white gradient
 viewNode = slicer.app.layoutManager().threeDWidget(0).mrmlViewNode()
 viewNode.SetBackgroundColor(1,1,1)
-viewNode.SetBackgroundColor2(0,0,0)
+viewNode.SetBackgroundColor2(1,1,1)
 
 #remove bounding box and orientation axes (a,s,r)
 viewNode.SetBoxVisible(0)
