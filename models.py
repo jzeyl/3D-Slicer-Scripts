@@ -33,8 +33,8 @@ for i in range(3,len(modelnodelist)):
 #make all models invisible:
 for i in range(3,len(modelnodelist)):
     slicer.mrmlScene.GetNthNodeByClass(i,'vtkMRMLModelNode').SetDisplayVisibility(0)
-#convert models to markups
 
+#convert models to markups
 #import ScreenCapture
 #viewNodeID = 'vtkMRMLSliceNodeRed'
 #cap = ScreenCapture.ScreenCaptureLogic()

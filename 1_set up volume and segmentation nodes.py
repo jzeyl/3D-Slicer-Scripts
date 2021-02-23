@@ -1,19 +1,4 @@
 
-##########################INPUT DATA FOR NEW SESSION
-#ID = "Flamingo01 2019"
-#spacing = 0.032#yes
-#folder = "F:\\0CT Scans\\1_Jan 2019\\18012018_09 K151\\k151 oct17 16bbackofhead\\earcrp"
-#\Substack (256-653)0000.tif
-#ID = "K151 2018"
-#spacing = 0.032#yes
-import os
-firstfile = folder+'\\'+os.listdir(folder)[0]
-#load volume
-slicer.util.loadVolume(firstfile, returnNode=True)
-#SET ROOT DIRECTORY to be in the same folder as the cropped files
-slicer.mrmlScene.SetRootDirectory(folder)
-######################################
-
 #You can print all Segment Editor effect parameter names by typing this into the Python console:
 #print(slicer.mrmlScene.GetFirstNodeByClass("vtkMRMLSegmentEditorNode"))
 # Load dry bone CT of skull into the scene and run this script to automatically segment endocranium

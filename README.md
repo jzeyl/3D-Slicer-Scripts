@@ -15,10 +15,10 @@ opening previously saved scenes and creating objects with unique ID
 
 Then run the processes on the 3D data:
 
->staticfunctions.py - setup all the functions for implementing 3D processing  
+>staticfunctions.py - setup all the functions for implementing 3D processing  . Creates empty segments.
 > 2_segentation effects.py - run segmentation effects. This includes 3d painting different structures of interest (columella, umbo, and endosseous cochlear duct tip) and using the 'smallest island' and custom automatich thresholding.
 > 2_fiducials and markup to models.py - this gives consistent naming to  (if there was a previously save scene with the fcsv files, this is not needed)
-> 3_fiducials and markup to models.py
+> 3_fiducials and markup to models.py - models made based on the fcsv values - this limits the area to 
 
 >4_markups to models.py - use the markup-to-models module to create model from fcsv points
 ## 2. importing data from a folder, setting resolutions
