@@ -3,20 +3,20 @@
 # 1 TYMPANIC MEMBRANE AND EXTRACOLUMELLA
 
 #markups fiducial node
-#inputMarkups = getNode(ID+'ECandTMmrk_outline')
-##create model node
-#ECTMModel = slicer.mrmlScene.AddNode(slicer.vtkMRMLModelNode())#adding a node to scene
-#ECTMModel.SetName(ID+'EC_TM_mod')
-#ECTMModel.CreateDefaultDisplayNodes()
-#ECTMModel.GetDisplayNode().SetSliceIntersectionVisibility(True)
-##ECTMModel.GetDisplayNode().SetColor(0,1,0)
+inputMarkups = getNode(ID+'ECandTMmrk_outline')
+#create model node
+ECTMModel = slicer.mrmlScene.AddNode(slicer.vtkMRMLModelNode())#adding a node to scene
+ECTMModel.SetName(ID+'EC_TM_mod')
+ECTMModel.CreateDefaultDisplayNodes()
+ECTMModel.GetDisplayNode().SetSliceIntersectionVisibility(True)
+#ECTMModel.GetDisplayNode().SetColor(0,1,0)
 #
 ##create markups to model node
-#markupsToModel = slicer.mrmlScene.AddNode(slicer.vtkMRMLMarkupsToModelNode())
-#markupsToModel.SetAutoUpdateOutput(True)
-#markupsToModel.SetAndObserveMarkupsNodeID(inputMarkups.GetID())#set input node
-#markupsToModel.SetAndObserveModelNodeID(ECTMModel.GetID())#set model node (only needed for the first one)
-#markupsToModel.SetModelType(0)#closed surface
+markupsToModel = slicer.mrmlScene.AddNode(slicer.vtkMRMLMarkupsToModelNode())
+markupsToModel.SetAutoUpdateOutput(True)
+markupsToModel.SetAndObserveMarkupsNodeID(inputMarkups.GetID())#set input node
+markupsToModel.SetAndObserveModelNodeID(ECTMModel.GetID())#set model node (only needed for the first one)
+markupsToModel.SetModelType(0)#closed surface
 #####check the coverage of the model in 4d view
 
 
@@ -145,64 +145,6 @@ segmentationDisplayNode.SetSegmentVisibility(ID+"EC_TM_mod",0)
 segmentationDisplayNode.SetSegmentVisibility(ID+"RW_mod",0)
 ##################
 
-
-#save stls
-#slicer.mrmlScene.GetRootDirectory()
-
-## Write to STL file
-#colmesh = segmentationNode.GetClosedSurfaceRepresentation(ID+" thresh col")
-#writer = vtk.vtkSTLWriter()
-#writer.SetInputData(colmesh)
-#filepath = slicer.mrmlScene.GetRootDirectory()+'/colthresh.stl'
-#writer.SetFileName(filepath)
-##writer.Update()
-##
-##writer = vtk.vtkSTLWriter()
-##writer.SetInputData(surfaceMesh)
-##writer.SetFileName(slicermrmlScene.GetRootdirectory()+)
-##writer.Update()
-##"C:\Users\jeffzeyl\Desktop\Volumetest.stl"
-#
-#
-#
-##To generate the contours from your own module, you just need to add a vtkMRMLMarkupsToModelNode in your scene and set up its inputs and outputs. 
-## At minimum, call SetAndObserveMarkupsNodeID and SetAndObserveModelNodeID. 
-## 
-## See all methods and options at:
-##https://github.com/SlicerIGT/SlicerIGT/blob/master/MarkupsToModel/MRML/vtkMRMLMarkupsToModelNode.h 20
-##MarkupsToModel/MRML/vtkMRMLMarkupsToModelNode.h 21
-#
-#
-#
-#
-#
-#
-##model type
-#markupsToModel.SetModelType(0)#closed surface
-#
-#
-#
-#
-##input fiducial markup nodes: Fid
-#FIDNode5.SetName(ID+"ECandTMmrk_outline")#FidNode5
-#FIDNode2.SetName(ID+" RW")#FidNode2
-#FIDNode3.SetName(ID+" CA")#FidNode3
-#
-##output models
-#ID+'EC_TM_mod'
-#ID+'RW_mod'
-#ID+'CA_mod'
-
-
-#model typ3 (closed)
-#set tube radius
-#set colour
-
-#InputMarkups [InputMarkups]: vtkMRMLMarkupsFiducialNode1
-#OutputModel [OutputModel]: vtkMRMLModelNode5
-#ModelType: curve
-#PolynomialFitType: globalLeastSquares
-#TubeRadius: 0.2
 
 
 

@@ -1,8 +1,8 @@
 #this script imports a tif stack file from a folder
 
-folder = r'C:\Users\jeffz\Desktop\copyoutput\Jun10 batch\Ostrich01'
-ID = "Ostrich01"
-spacing = 0.08
+folder = r'C:\Users\jeffz\Desktop\copyoutput\Jun25 batch\ADP01'
+ID = "ADP"
+spacing = 0.01538
 #folder = 'C:\\Users\\jeffzeyl\\Desktop\\copyoutput\\Jun17 batch\\CC209_2019'
 filesinfolder = slicer.util.getFilesInDirectory(folder)
 
@@ -59,7 +59,6 @@ def setSlicePoseFromSliceNormalAndPosition(sliceNode, sliceNormal, slicePosition
         sliceAxisX[0], sliceAxisX[1], sliceAxisX[2],
         slicePosition[0], slicePosition[1], slicePosition[2], 0)
 
-
 sliceNode = getNode('vtkMRMLSliceNodeRed')
 
 #file_input = open("C:\\Users\\jeffzeyl\\Desktop\\copyoutput\\Jun5 batch\\DCSB\\FPslice_normalsandpsotion.txt",'r')
@@ -92,6 +91,7 @@ cap.captureImageFromView(view,slicedir+'\\'+ID+'redsliceFP.tif')
 slicer.modules.markups.logic().StartPlaceMode(1)
 
 
+
 #3 points
 def UpdateSlicePlane(param1=None, param2=None):
   # Get point positions as numpy array
@@ -117,14 +117,10 @@ markups = slicer.util.getNode('F')
 # Update slice plane manually
 UpdateSlicePlane()
 
+#######3#TAKE SCREENSHOT###
 import ScreenCapture
 viewNodeID = 'vtkMRMLSliceNodeRed'
 cap = ScreenCapture.ScreenCaptureLogic()
 view = cap.viewFromNode(slicer.mrmlScene.GetNodeByID(viewNodeID))
 cap.captureImageFromView(view,slicedir+'\\'+ID+'redslicethroughcol.tif')
 
-#CA
-viewNodeID = 'vtkMRMLSliceNodeRed'
-cap = ScreenCapture.ScreenCaptureLogic()
-view = cap.viewFromNode(slicer.mrmlScene.GetNodeByID(viewNodeID))
-cap.captureImageFromView(view,slicedir+'\\'+ID+'redslicethroughCA.tif')

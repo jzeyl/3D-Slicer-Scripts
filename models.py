@@ -2,6 +2,7 @@
 
 #filesinfolder = slicer.util.getFilesInDirectory(folder)
 
+#find all files with 'stl' in the folder to load stl files
 stlregex = "stl"
 stlfiles = [i for i in filesinfolder if stlregex in i] 
 
@@ -16,7 +17,6 @@ modelnodelist = slicer.util.getNodesByClass('vtkMRMLModelNode')
 modelnamelist = []
 for i in range(len(modelnodelist)):
     modelnamelist.append(slicer.mrmlScene.GetNthNodeByClass(i,'vtkMRMLModelNode').GetName())
-
 
 #set colour of all models to white
 for i in range(3,len(modelnodelist)):
