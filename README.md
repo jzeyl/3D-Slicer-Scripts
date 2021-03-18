@@ -1,33 +1,67 @@
-# 3DSlicer automation scripts
-This repository includes Python scripts for processing many microCT scans, going through many volumes. These are to be run in the 3D slicer interpreter  3D Slicer 4.10.1. Using these scripts greatly speeds up repetitive tasks that would require button-clicking the GUI while working through many files.
+# 3DSlicer Automation Python Scripts
+This repository includes Python scripts for running commands for 3D Slicer 4.10.1 using the built-in interpreter. Using these scripts greatly speeds up repetitive tasks for loading and processin volumes that would require button-clicking the GUI while working through many files. It automatates the creation of segmentation nodes, markup nodes with unique identifies for each specimen. Then there are functions which run specific effects (e.g., segmentation, modifying markups) using those nodes.
+Scripts were based on the nightly scripts repository____
+ and looking at 3D Slicer source code_________ 
 
-Scripts were are based on the nightly scripts repository_____
- and source code_________ 
 
-For each volume, give the ID code, resolution, and the file path for the folder where the scene file (#1) or volume (#2) is located.
 
 ## 1. Creating data for the first time
-Opening up new filess and creating objects with unique ID:
+For each volume, give the ID code, resolution, and the file path for the folder where the volume located. 
 
 >* *1_set up volume and segmentation nodes.py*  
 
+Next, repeatable segmentation nodes can be created with the unique IDs in the naming:
 >* set up segmentations.py
 ![alt text](addsegnames.png)
 OR, if opening previously saved scenes file 
 
+Next there is a need to populate markup nodes, also named according to unique IDs:
+
+>* fcsv_template(): set up fcsv names
+![alt text](markupscreated.png)
+
+If a scene file has previously been saved with those segmentation and markup nodes, the following script will allow for the python interpreter to have access to the previously created nodes:
 >* *set resolution on previously saves scene.py*
 
+## Functions
+There are several custom functions which are run on volume, which are defined in the 'staticfunction.py' file.
+
+>* *staticfunctions.py* 
+
+  
+
+**Segmentation functions:**  
+colthresh() - run threshold on selected segment.
+-sets the maximum entropy algorithm as minimum-
+![alt text](colthresh.png)
+colkeeplargestisland() runs the largest island on the 
+thresholded columella
+
+ecd() - sets the threshold on a segmented end of endosseous cochlear
+duct (uses all values less than maxent) (highlights soft tissues)
+-also runs keep largest island
+
+umbo_ME_ISOtest() runs a threshold test, but doesn't apply it. If the threshold
+doesn't work, the user can modify manually using the GUI
+
+umbo_MES_ISO_apply() = runs threshold test and applies it
 
 
->* *2_fiducials and markup to models.py* - this gives consistent naming to  (if there was a previously save scene with the fcsv files, this is not needed)
-![alt text](markupscreated.png)
->* *3_fiducials and markup to models.py* - models made based on the fcsv values - this limits the area to 
 
-Then run processes on the volume:
+**Markup functions:**  
+computedEC_TMmarkup() - joins together points from multiple fcsv
+objects, in order to later be used in markup-to-model which will cover
+an area encompassing points of intereset
 
->* *staticfunctions.py* - setup all the functions for implementing 3D processing. Creates empty segments with unique specimen ID.  
+ETmarkuptomodel() - runs the markup to model to create a region of interest
+using the fcsv input
 
+**Input/output function:**  
+opennewvolume(): given the path for a folder, it opens the first 
+volume , or file containing "tif", and also sets the ID and spacing
+writecolvoltofile() - writes the columella volume to a file
 
+fcsv_display_smaller() - change the display of all the markup nodes and lock for editing
 
 >* *4_markups to models.py* - use the markup-to-models module to create model from fcsv points  . This creates a 3D region of interest for further segmentation
 
@@ -35,6 +69,7 @@ Then run processes on the volume:
 -it then converts the model to a segmentation, which can be
 ![alt text](tosegmentations.png)
 ![alt text](segmentedinsidemodel.png)
+
 ## 2. Importing data from a folder, setting resolutions
  
 These set of scripts are for loading a volume, several fcsv files and models based all located in the same folder. This is for making nice figures without having to load all the segmentations
@@ -59,36 +94,5 @@ Created gif of rotating 3D models and points:
 >* *switch mouse int markup mode.py*
 
 
-## 4. Static functions descriptionss
-colthresh() - run threshold on selected segment.
--sets the maximum entropy algorithm as minimum-
-![alt text](colthresh.png)
-colkeeplargestisland() runs the largest island on the 
-thresholded columella
-
-writecolvoltofile() - writes the columella volume to a file
-
-ecd() - sets the threshold on a segmented end of endosseous cochlear
-duct (uses all values less than maxent) (highlights soft tissues)
--also runs keep largest island
-
-umbo_ME_ISOtest() runs a threshold test, but doesn't apply it. If the threshold
-doesn't work, the user can modify manually using the GUI
-
-umbo_MES_ISO_apply() = runs threshold test and applies it
-
-computedEC_TMmarkup() - joins together points from multiple fcsv
-objects, in order to later be used in markup-to-model which will cover
-an area encompassing points of intereset
-
-ETmarkuptomodel() - runs the markup to model to create a region of interest
-using the fcsv input
-
-opennewvolume(): given the path for a folder, it opens the first 
-volume , or file containing "tif", and also sets the ID and spacing
-
-fcsv_template(): set up fcsv names
-
-fcsv_display_smaller()
 
 
