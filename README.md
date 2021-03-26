@@ -18,7 +18,7 @@ OR, if opening previously saved scenes file
 Next there is a need to populate markup nodes, also named according to unique IDs:
 
 >* fcsv_template(): set up fcsv names
-![alt text](markupscreated.png)
+![alt text](markupscreated.png)  
 
 If a scene file has previously been saved with those segmentation and markup nodes, the following script will allow for the python interpreter to have access to the previously created nodes:
 >* *set resolution on previously saves scene.py*
