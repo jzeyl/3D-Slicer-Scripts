@@ -1,7 +1,7 @@
 # 3DSlicer Automation Python Scripts
 This repository includes Python scripts for running commands for 3D Slicer 4.10.1 using the built-in interpreter. Using these scripts greatly speeds up repetitive tasks for loading and processin volumes that would require button-clicking the GUI while working through many files. It automatates the creation of segmentation nodes, markup nodes with unique identifies for each specimen. Then there are functions which run specific effects (e.g., segmentation, modifying markups) using those nodes.
-Scripts were based on the nightly scripts repository____
- and looking at 3D Slicer source code_________ 
+Scripts were based on the nightly scripts repository https://www.slicer.org/wiki/Documentation/Nightly/ScriptRepository
+ and looking at 3D Slicer source code https://github.com/Slicer/Slicer. 
 
 
 
