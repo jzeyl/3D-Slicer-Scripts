@@ -13,12 +13,20 @@ First, a unique ID code, resolution, and file path for the folder where the volu
 Next, repeatable segmentation nodes are created with the unique IDs in the naming:
 >* set up segmentations.py
 ![alt text](addsegnames.PNG)
+<<<<<<< HEAD
 
+=======
+OR, if opening previously saved scenes file 
+>>>>>>> ca4b7c07c75f623cc8c21b7fdc61cbe6decf7ddc
 
 Next there is a need to populate markup nodes, also named according to unique IDs:
 
 >* fcsv_template(): set up fcsv names
+<<<<<<< HEAD
 ![alt text](markupscreated.PNG)
+=======
+![alt text](markupscreated.PNG)  
+>>>>>>> ca4b7c07c75f623cc8c21b7fdc61cbe6decf7ddc
 
 If a scene file has previously been saved with those segmentation and markup nodes, the following script will allow for the python interpreter to have access to the previously created nodes:
 
