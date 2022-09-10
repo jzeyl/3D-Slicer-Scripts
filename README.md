@@ -1,8 +1,11 @@
 # 3D Slicer Automation Python Scripts
-This repository includes Python scripts for running commands for 3D Slicer 4.10.1 using the built-in interpreter. Using these scripts greatly speeds up repetitive tasks for loading and processing volumes that would otherwires require repetative button-clicking the GUI while working through many files. The scripts automatically create segmentation nodes and markup nodes with unique identifier for each volume/specimen. There are several functions to run specific effects available through the GUI (e.g., segmentation effects, modifications to markup display) using those segmentation and markup nodes. Scripts are based on modifications of the 3D Slicer nightly scripts repository https://www.slicer.org/wiki/Documentation/Nightly/ScriptRepository
- and 3D Slicer source code https://github.com/Slicer/Slicer. 
+3D Slicer software has a [scripts repository](https://www.slicer.org/wiki/Documentation/Nightly/ScriptRepository) for automating tasks in the software using the software's built-in interpreter. Using these scripts greatly speeds up repetitive tasks for loading and processing volumes that would otherwires require repetative button-clicking the GUI while working through many files. 
 
 
+The present repository is a collection of some of my personal Python scripts I have used for running commands for 3D Slicer 4.1 and Slicer 5. The scripts automatically create segmentation nodes and markup nodes with unique identifier for each volume/specimen. There are several functions to run specific effects available through the GUI (e.g., segmentation effects, modifications to markup display) using those segmentation and markup nodes. 
+
+These scripts cover my particular analysis for (1) the [setup of segmentations and effects given a volume that has been imported](##1.-creating-data-for-the-first-time) and (2) [importing from a folder](##2.-importing-data-from-a-folder,-setting-resolutions), (3) [miscellaneous scripts](##-3.-Miscellaneous-scripts:),
+and script to quantify medial thickness (thickness.py).
 
 ## 1. Creating data for the first time
 First, create a unique ID code, resolution, and file path for the folder where the volume is located are created. 
@@ -87,7 +90,4 @@ Created gif of rotating 3D models and points:
 ## 3. Miscellaneous scripts:
 >* *change color of background display 3d.py*  
 >* *switch mouse int markup mode.py*
-
-
-
 
