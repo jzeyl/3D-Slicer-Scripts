@@ -4,7 +4,7 @@
 
 The present repository is a collection of some of my personal Python scripts I have used for running commands for 3D Slicer 4.1 and Slicer 5. The scripts automatically create segmentation nodes and markup nodes with unique identifier for each volume/specimen. There are several functions to run specific effects available through the GUI (e.g., segmentation effects, modifications to markup display) using those segmentation and markup nodes. 
 
-These scripts cover my particular analysis for (1) the [setup of segmentations and effects given a volume that has been imported](##1.-creating-data-for-the-first-time) and (2) [importing from a folder](##2.-importing-data-from-a-folder,-setting-resolutions), (3) [miscellaneous scripts](##-3.-Miscellaneous-scripts:),
+These scripts cover my particular analysis for (1) the [setup of segmentations and effects given a volume that has been imported](#1.-creating-data-for-the-first-time) and (2) [importing from a folder](#2.-importing-data-from-a-folder,-setting-resolutions), (3) [miscellaneous scripts](#-3.-miscellaneous-scripts:),
 and script to quantify medial thickness (thickness.py).
 
 ## 1. Creating data for the first time
