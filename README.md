@@ -88,6 +88,9 @@ Created gif of rotating 3D models and points:
 >* *screencapture.py* -  creates a 3D rotation in the horizonal plane gif.
 
 ## 3. Miscellaneous scripts:
->* *change color of background display 3d.py*  
->* *switch mouse int markup mode.py*
+>* *change color of background display 3d.py* -   
+>* *switch mouse int markup mode.py* - 
+>* *thickeness.py* - compute thickness
+>* *functions_baffle_planner* - modele to segmentations and access segmentation logic
+>* * load_dicom_modified_otsu.py* load dicom and automatically run grayscale model maker using otsu threshold. Can be run from command line using arguments for DICOM folder 
 
