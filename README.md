@@ -96,4 +96,5 @@ Created gif of rotating 3D models and points:
 >* *thickness.py* - compute thickness
 >* *functions_baffle_planner* - modele to segmentations and access segmentation logic
 >* *load_dicom_modified_otsu.py* load dicom and automatically run grayscale model maker using otsu threshold. Can be run from command line using arguments for DICOM folder 
+>* *mirror.py* use of surface toolbox to transform/rotate model and use of model registration module within IGT
 
