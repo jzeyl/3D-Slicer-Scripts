@@ -97,4 +97,8 @@ Created gif of rotating 3D models and points:
 >* *functions_baffle_planner* - modele to segmentations and access segmentation logic
 >* *load_dicom_modified_otsu.py* load dicom and automatically run grayscale model maker using otsu threshold. Can be run from command line using arguments for DICOM folder 
 >* *mirror.py* use of surface toolbox to transform/rotate model and use of model registration module within IGT
+>* *elasitxreg_skullstripping_shnode* running elastix registration and skull stripping. organization in folders and export volumes, segmentation, and scene files
+>* *commandl line_loopfolders_volume rendering* using argparse run a custom volume rendering and screenshot export on all files in a folder
+>* *2D slice_distance_thresh_outline* specifying a current slice (specify red, green, or yellow axis), this hollows a segmentation to get a segmentation outline for two segmentations on that slice. then, extracts the numyp array to calculate the distances between two segmentation. Then, converting back to RAS coordinates, plost the outlines within a given distance of the other
+>* *Crop volume using ROI* - automatation of crop volume module. Some investigation of dicom tags
 
