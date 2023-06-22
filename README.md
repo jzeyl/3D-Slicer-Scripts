@@ -101,4 +101,6 @@ Created gif of rotating 3D models and points:
 >* *commandl line_loopfolders_volume rendering* using argparse run a custom volume rendering and screenshot export on all files in a folder
 >* *2D slice_distance_thresh_outline* specifying a current slice (specify red, green, or yellow axis), this hollows a segmentation to get a segmentation outline for two segmentations on that slice. then, extracts the numyp array to calculate the distances between two segmentation. Then, converting back to RAS coordinates, plost the outlines within a given distance of the other
 >* *Crop volume using ROI* - automatation of crop volume module. Some investigation of dicom tags
+>* *AIAA jun 17.py* - autosegmentation using nvidia AIAA
+>* *XRAY batch_jun19.py* - apply median filter and mask volume segmentation effects. Draw text using opencv and imageio, save as png/jpg. Combine before and after images, sidebyside
 
