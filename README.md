@@ -1,14 +1,32 @@
+
+
 # 3D Slicer Automation Python Scripts
 3D Slicer software has a [scripts repository](https://www.slicer.org/wiki/Documentation/Nightly/ScriptRepository) for automating tasks in the software using the software's built-in interpreter. Using these scripts greatly speeds up repetitive tasks for loading and processing volumes that would otherwires require repetative button-clicking the GUI while working through many files. 
 
 
 The present repository is a collection of some of my personal Python scripts I have used for running commands for 3D Slicer 4.1 and Slicer 5. The scripts automatically create segmentation nodes and markup nodes with unique identifier for each volume/specimen. There are several functions to run specific effects available through the GUI (e.g., segmentation effects, modifications to markup display) using those segmentation and markup nodes. 
 
-These scripts cover my particular analysis for  
+##  Miscellaneous scripts:
+>* *change color of background display 3d.py* -   
+>* *switch mouse int markup mode.py* - 
+>* *thickness.py* - compute thickness
+>* *functions_baffle_planner* - modele to segmentations and access segmentation logic
+>* *load_dicom_modified_otsu.py* load dicom and automatically run grayscale model maker using otsu threshold. Can be run from command line using arguments for DICOM folder 
+>* *mirror.py* use of surface toolbox to transform/rotate model and use of model registration module within IGT
+>* *elasitxreg_skullstripping_shnode* running elastix registration and skull stripping. organization in folders and export volumes, segmentation, and scene files
+>* *commandl line_loopfolders_volume rendering* using argparse run a custom volume rendering and screenshot export on all files in a folder
+>* *2D slice_distance_thresh_outline* specifying a current slice (specify red, green, or yellow axis), this hollows a segmentation to get a segmentation outline for two segmentations on that slice. then, extracts the numyp array to calculate the distances between two segmentation. Then, converting back to RAS coordinates, plost the outlines within a given distance of the other
+>* *Crop volume using ROI* - automatation of crop volume module. Some investigation of dicom tags
+>* *AIAA jun 17.py* - autosegmentation using nvidia AIAA
+>* *XRAY batch_jun19.py* - apply median filter and mask volume segmentation effects. Draw text using opencv and imageio, save as png/jpg. Combine before and after images, sidebyside
+>* *diploe_thickness_github.py* - apply segmentation effects, then run binary thinning and danielssondistance filters, to create a thickenss map using 'probe model with volume'
+>* *diploe_pt2.py* - slice a model into 3D grid using dynamic modeler and using 'clean' from surface toolbox. Saving mean thickness to a text file. Batch process
+>* *seg2thickness.py* - load segmentation for each folder, along with danielssondistance volume, to create a thickness map for each segmentation and save to a file
+
+
+Additional scripts cover my particular analysis for  
 (1) the [setup of segmentations and effects given a volume that has been imported](#1.-creating-data-for-the-first-time) and   
 (2) [importing from a folder](#2.-importing-data-from-a-folder,-setting-resolutions),   
-(3) [miscellaneous scripts](#-3.-miscellaneous-scripts:),
-and script to quantify medial thickness (thickness.py).
 
 ## 1. Creating data for the first time
 First, create a unique ID code, resolution, and file path for the folder where the volume is located are created. 
@@ -90,17 +108,5 @@ These set of scripts are for loading a volume, several fcsv files, and models fr
 Created gif of rotating 3D models and points:
 >* *screencapture.py* -  creates a 3D rotation in the horizonal plane gif.
 
-## 3. Miscellaneous scripts:
->* *change color of background display 3d.py* -   
->* *switch mouse int markup mode.py* - 
->* *thickness.py* - compute thickness
->* *functions_baffle_planner* - modele to segmentations and access segmentation logic
->* *load_dicom_modified_otsu.py* load dicom and automatically run grayscale model maker using otsu threshold. Can be run from command line using arguments for DICOM folder 
->* *mirror.py* use of surface toolbox to transform/rotate model and use of model registration module within IGT
->* *elasitxreg_skullstripping_shnode* running elastix registration and skull stripping. organization in folders and export volumes, segmentation, and scene files
->* *commandl line_loopfolders_volume rendering* using argparse run a custom volume rendering and screenshot export on all files in a folder
->* *2D slice_distance_thresh_outline* specifying a current slice (specify red, green, or yellow axis), this hollows a segmentation to get a segmentation outline for two segmentations on that slice. then, extracts the numyp array to calculate the distances between two segmentation. Then, converting back to RAS coordinates, plost the outlines within a given distance of the other
->* *Crop volume using ROI* - automatation of crop volume module. Some investigation of dicom tags
->* *AIAA jun 17.py* - autosegmentation using nvidia AIAA
->* *XRAY batch_jun19.py* - apply median filter and mask volume segmentation effects. Draw text using opencv and imageio, save as png/jpg. Combine before and after images, sidebyside
+
 
