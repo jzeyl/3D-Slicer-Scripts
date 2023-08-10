@@ -1,3 +1,5 @@
+#script runs segmentation effects, converts to model, and creates a thickness map using binarythinning and danielssondistance algorithms
+
 import os
 import SimpleITK as sitk
 import sitkUtils
