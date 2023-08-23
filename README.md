@@ -22,7 +22,7 @@ The present repository is a collection of some of my personal Python scripts I h
 >* *diploe_thickness_github.py* - apply segmentation effects, then run binary thinning and danielssondistance filters, to create a thickenss map using 'probe model with volume'
 >* *diploe_pt2.py* - slice a model into 3D grid using dynamic modeler and using 'clean' from surface toolbox. Saving mean thickness to a text file. Batch process
 >* *seg2thickness.py* - load segmentation for each folder, along with danielssondistance volume, to create a thickness map for each segmentation and save to a file
-
+>* *radiomics2.py* - batch-run radiomics module inside slicer and save results to excel files
 
 Additional scripts cover my particular analysis for  
 (1) the [setup of segmentations and effects given a volume that has been imported](#1.-creating-data-for-the-first-time) and   
